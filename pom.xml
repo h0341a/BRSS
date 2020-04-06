@@ -10,6 +10,7 @@
         <module>service</module>
         <module>dao</module>
         <module>startup</module>
+        <module>model</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
