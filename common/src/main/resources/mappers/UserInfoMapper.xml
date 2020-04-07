@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jycz.brss.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.UserInfo">
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="bio" jdbcType="VARCHAR" property="bio" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="fans_number" jdbcType="INTEGER" property="fansNumber" />
+    <result column="idol_number" jdbcType="INTEGER" property="idolNumber" />
+    <result column="read_books" jdbcType="INTEGER" property="readBooks" />
+    <result column="unread_books" jdbcType="INTEGER" property="unreadBooks" />
+    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+  </resultMap>
+  <insert id="insert" parameterType="jycz.brss.model.entity.UserInfo">
+    insert into user_info (uid, bio, avatar_url, 
+      fans_number, idol_number, read_books, 
+      unread_books, register_date)
+    values (#{uid,jdbcType=INTEGER}, #{bio,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
+      #{fansNumber,jdbcType=INTEGER}, #{idolNumber,jdbcType=INTEGER}, #{readBooks,jdbcType=INTEGER}, 
+      #{unreadBooks,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="jycz.brss.model.entity.UserInfo">
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="bio != null">
+        bio,
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
+      <if test="fansNumber != null">
+        fans_number,
+      </if>
+      <if test="idolNumber != null">
+        idol_number,
+      </if>
+      <if test="readBooks != null">
+        read_books,
+      </if>
+      <if test="unreadBooks != null">
+        unread_books,
+      </if>
+      <if test="registerDate != null">
+        register_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="bio != null">
+        #{bio,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fansNumber != null">
+        #{fansNumber,jdbcType=INTEGER},
+      </if>
+      <if test="idolNumber != null">
+        #{idolNumber,jdbcType=INTEGER},
+      </if>
+      <if test="readBooks != null">
+        #{readBooks,jdbcType=INTEGER},
+      </if>
+      <if test="unreadBooks != null">
+        #{unreadBooks,jdbcType=INTEGER},
+      </if>
+      <if test="registerDate != null">
+        #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
