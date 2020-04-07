@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.UserCollection;
+import com.jycz.common.model.entity.UserCollection;
 
 public interface UserCollectionMapper {
     int insert(UserCollection record);

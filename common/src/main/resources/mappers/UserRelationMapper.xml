@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.UserRelationMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.UserRelation">
+<mapper namespace="com.jycz.common.dao.UserRelationMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserRelation">
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="idol_id" jdbcType="INTEGER" property="idolId" />
     <result column="status" jdbcType="BIT" property="status" />
     <result column="ugid" jdbcType="INTEGER" property="ugid" />
   </resultMap>
-  <insert id="insert" parameterType="jycz.brss.model.entity.UserRelation">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.UserRelation">
     insert into user_relation (uid, idol_id, status, 
       ugid)
     values (#{uid,jdbcType=INTEGER}, #{idolId,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
       #{ugid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.UserRelation">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserRelation">
     insert into user_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">

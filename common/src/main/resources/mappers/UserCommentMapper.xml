@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.UserCommentMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.UserComment">
+<mapper namespace="com.jycz.common.dao.UserCommentMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserComment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="comment_date" jdbcType="TIMESTAMP" property="commentDate" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="rid" jdbcType="INTEGER" property="rid" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="jycz.brss.model.entity.UserComment">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jycz.common.model.entity.UserComment">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -29,7 +29,7 @@
     delete from user_comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="jycz.brss.model.entity.UserComment">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.UserComment">
     insert into user_comment (id, parent_id, comment_date, 
       uid, rid, content
       )
@@ -37,7 +37,7 @@
       #{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.UserComment">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserComment">
     insert into user_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="jycz.brss.model.entity.UserComment">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jycz.common.model.entity.UserComment">
     update user_comment
     <set>
       <if test="parentId != null">
@@ -101,7 +101,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="jycz.brss.model.entity.UserComment">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jycz.common.model.entity.UserComment">
     update user_comment
     set parent_id = #{parentId,jdbcType=INTEGER},
       comment_date = #{commentDate,jdbcType=TIMESTAMP},
@@ -110,7 +110,7 @@
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="jycz.brss.model.entity.UserComment">
+  <update id="updateByPrimaryKey" parameterType="com.jycz.common.model.entity.UserComment">
     update user_comment
     set parent_id = #{parentId,jdbcType=INTEGER},
       comment_date = #{commentDate,jdbcType=TIMESTAMP},

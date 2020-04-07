@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.Book;
+import com.jycz.common.model.entity.Book;
 
 public interface BookMapper {
     int deleteByPrimaryKey(Integer id);

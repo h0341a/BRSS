@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.UserComment;
+import com.jycz.common.model.entity.UserComment;
 
 public interface UserCommentMapper {
     int deleteByPrimaryKey(Integer id);

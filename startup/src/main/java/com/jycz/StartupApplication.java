@@ -1,4 +1,4 @@
-package jycz.brss;
+package com.jycz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

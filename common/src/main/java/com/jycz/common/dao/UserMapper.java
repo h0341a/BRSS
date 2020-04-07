@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.User;
+import com.jycz.common.model.entity.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);

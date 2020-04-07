@@ -1,4 +1,4 @@
-package jycz.brss;
+package com.jycz;
 
 
 import org.springframework.context.annotation.Bean;

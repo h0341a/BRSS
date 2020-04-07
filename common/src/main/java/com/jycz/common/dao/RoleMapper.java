@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.Role;
+import com.jycz.common.model.entity.Role;
 
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);

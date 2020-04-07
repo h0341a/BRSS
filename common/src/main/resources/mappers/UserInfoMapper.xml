@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.UserInfoMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.UserInfo">
+<mapper namespace="com.jycz.common.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserInfo">
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="bio" jdbcType="VARCHAR" property="bio" />
     <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
@@ -11,7 +11,7 @@
     <result column="unread_books" jdbcType="INTEGER" property="unreadBooks" />
     <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
   </resultMap>
-  <insert id="insert" parameterType="jycz.brss.model.entity.UserInfo">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.UserInfo">
     insert into user_info (uid, bio, avatar_url, 
       fans_number, idol_number, read_books, 
       unread_books, register_date)
@@ -19,7 +19,7 @@
       #{fansNumber,jdbcType=INTEGER}, #{idolNumber,jdbcType=INTEGER}, #{readBooks,jdbcType=INTEGER}, 
       #{unreadBooks,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.UserInfo">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserInfo">
     insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.RoleMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.Role">
+<mapper namespace="com.jycz.common.dao.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.Role">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="role" jdbcType="VARCHAR" property="role" />
   </resultMap>
@@ -18,11 +18,11 @@
     delete from role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="jycz.brss.model.entity.Role">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.Role">
     insert into role (id, role)
     values (#{id,jdbcType=INTEGER}, #{role,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.Role">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.Role">
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="jycz.brss.model.entity.Role">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jycz.common.model.entity.Role">
     update role
     <set>
       <if test="role != null">
@@ -50,7 +50,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="jycz.brss.model.entity.Role">
+  <update id="updateByPrimaryKey" parameterType="com.jycz.common.model.entity.Role">
     update role
     set role = #{role,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

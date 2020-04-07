@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.UserGroupMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.UserGroup">
+<mapper namespace="com.jycz.common.dao.UserGroupMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserGroup">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="gid" jdbcType="INTEGER" property="gid" />
@@ -19,11 +19,11 @@
     delete from user_group
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="jycz.brss.model.entity.UserGroup">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.UserGroup">
     insert into user_group (id, uid, gid)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.UserGroup">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserGroup">
     insert into user_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -48,7 +48,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="jycz.brss.model.entity.UserGroup">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jycz.common.model.entity.UserGroup">
     update user_group
     <set>
       <if test="uid != null">
@@ -60,7 +60,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="jycz.brss.model.entity.UserGroup">
+  <update id="updateByPrimaryKey" parameterType="com.jycz.common.model.entity.UserGroup">
     update user_group
     set uid = #{uid,jdbcType=INTEGER},
       gid = #{gid,jdbcType=INTEGER}

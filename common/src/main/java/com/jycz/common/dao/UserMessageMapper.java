@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.UserMessage;
+import com.jycz.common.model.entity.UserMessage;
 
 public interface UserMessageMapper {
     int insert(UserMessage record);

@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.UserRecommend;
+import com.jycz.common.model.entity.UserRecommend;
 
 public interface UserRecommendMapper {
     int deleteByPrimaryKey(Integer id);

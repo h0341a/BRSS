@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.UserMessageMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.UserMessage">
+<mapper namespace="com.jycz.common.dao.UserMessageMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserMessage">
     <result column="send_uid" jdbcType="INTEGER" property="sendUid" />
     <result column="accept_uid" jdbcType="INTEGER" property="acceptUid" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -9,7 +9,7 @@
     <result column="send_status" jdbcType="TINYINT" property="sendStatus" />
     <result column="read_status" jdbcType="TINYINT" property="readStatus" />
   </resultMap>
-  <insert id="insert" parameterType="jycz.brss.model.entity.UserMessage">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.UserMessage">
     insert into user_message (send_uid, accept_uid, content, 
       send_date, send_status, read_status
       )
@@ -17,7 +17,7 @@
       #{sendDate,jdbcType=TIMESTAMP}, #{sendStatus,jdbcType=TINYINT}, #{readStatus,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.UserMessage">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserMessage">
     insert into user_message
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="sendUid != null">

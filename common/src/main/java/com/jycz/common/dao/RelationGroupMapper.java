@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.RelationGroup;
+import com.jycz.common.model.entity.RelationGroup;
 
 public interface RelationGroupMapper {
     int deleteByPrimaryKey(Integer id);

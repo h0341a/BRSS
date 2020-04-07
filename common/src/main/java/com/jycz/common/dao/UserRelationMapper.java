@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.UserRelation;
+import com.jycz.common.model.entity.UserRelation;
 
 public interface UserRelationMapper {
     int insert(UserRelation record);

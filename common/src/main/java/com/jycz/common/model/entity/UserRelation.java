@@ -1,4 +1,4 @@
-package jycz.brss.model.entity;
+package com.jycz.common.model.entity;
 
 public class UserRelation {
     private Integer uid;

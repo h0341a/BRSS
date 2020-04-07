@@ -1,6 +1,6 @@
-package jycz.brss.dao;
+package com.jycz.common.dao;
 
-import jycz.brss.model.entity.UserInfo;
+import com.jycz.common.model.entity.UserInfo;
 
 public interface UserInfoMapper {
     int insert(UserInfo record);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jycz.brss.dao.RelationGroupMapper">
-  <resultMap id="BaseResultMap" type="jycz.brss.model.entity.RelationGroup">
+<mapper namespace="com.jycz.common.dao.RelationGroupMapper">
+  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.RelationGroup">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="group_name" jdbcType="VARCHAR" property="groupName" />
   </resultMap>
@@ -18,11 +18,11 @@
     delete from relation_group
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="jycz.brss.model.entity.RelationGroup">
+  <insert id="insert" parameterType="com.jycz.common.model.entity.RelationGroup">
     insert into relation_group (id, group_name)
     values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="jycz.brss.model.entity.RelationGroup">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.RelationGroup">
     insert into relation_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="jycz.brss.model.entity.RelationGroup">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jycz.common.model.entity.RelationGroup">
     update relation_group
     <set>
       <if test="groupName != null">
@@ -50,7 +50,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="jycz.brss.model.entity.RelationGroup">
+  <update id="updateByPrimaryKey" parameterType="com.jycz.common.model.entity.RelationGroup">
     update relation_group
     set group_name = #{groupName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
