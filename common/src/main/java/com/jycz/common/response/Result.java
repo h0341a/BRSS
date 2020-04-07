@@ -37,11 +37,11 @@ public class Result implements Serializable {
         return result;
     }
 
-    public static Result ofFail(ErrCodeEnum errCodeEnum){
+    public static Result ofFail(ErrInfoInter errInfoInter){
         Result result = new Result();
         result.success=false;
-        result.setErrCode(errCodeEnum.getErrCode());
-        result.setErrMsg(errCodeEnum.getErrMsg());
+        result.setErrCode(errInfoInter.getErrCode());
+        result.setErrMsg(errInfoInter.getErrMsg());
         return result;
     }
 

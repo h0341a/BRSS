@@ -7,15 +7,30 @@ import lombok.Getter;
  * @data 2020/4/7 17:24
  */
 @Getter
-public class BusinessException extends Exception {
-    public ErrCodeEnum errCodeEnum;
+public class BusinessException extends Exception implements ErrInfoInter {
+    public ErrInfoInter errInfoInter;
 
-    public BusinessException(ErrCodeEnum codeEnum) {
-        this.errCodeEnum = codeEnum;
+    public BusinessException(ErrInfoInter errInfoInter) {
+        this.errInfoInter = errInfoInter;
     }
 
-    public BusinessException(ErrCodeEnum errCodeEnum, String customMsg){
-        errCodeEnum.setErrMsg(customMsg);
-        this.errCodeEnum = errCodeEnum;
+    public BusinessException(ErrInfoInter errInfoInter, String customMsg){
+        errInfoInter.setErrMsg(customMsg);
+        this.errInfoInter = errInfoInter;
+    }
+
+    @Override
+    public int getErrCode() {
+        return this.errInfoInter.getErrCode();
+    }
+
+    @Override
+    public String getErrMsg() {
+        return this.errInfoInter.getErrMsg();
+    }
+
+    @Override
+    public ErrInfoInter setErrMsg(String msg) {
+        return this.errInfoInter.setErrMsg(msg);
     }
 }

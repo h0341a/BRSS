@@ -1,13 +1,11 @@
 package com.jycz.common.response;
 
-import lombok.Getter;
-
 /**
  * @author ling
  * @data 2020/4/7 17:10
  */
-@Getter
-public enum ErrCodeEnum {
+
+public enum ErrCodeEnum implements ErrInfoInter {
     /**
      *
      */
@@ -20,11 +18,20 @@ public enum ErrCodeEnum {
         this.errMsg = errMsg;
     }
 
-    public void setErrCode(int errCode) {
-        this.errCode = errCode;
+    @Override
+    public int getErrCode() {
+        return errCode;
     }
 
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    @Override
+    public String getErrMsg() {
+        return errMsg;
     }
+
+    @Override
+    public ErrInfoInter setErrMsg(String msg) {
+        this.errMsg = errMsg;
+        return this;
+    }
+
 }

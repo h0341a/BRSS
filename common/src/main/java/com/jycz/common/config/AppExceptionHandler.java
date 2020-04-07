@@ -18,7 +18,7 @@ public class AppExceptionHandler {
     @ExceptionHandler
     public Result exceptionHandler(Exception e) {
         if (e instanceof BusinessException) {
-            return Result.ofFail(((BusinessException) e).getErrCodeEnum());
+            return Result.ofFail(((BusinessException) e));
         } else {
             //error级别的错误会写入日志文件
             logger.error(e.getMessage());
