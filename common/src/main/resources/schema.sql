@@ -1,11 +1,11 @@
 create table role(
                      id integer auto_increment primary key ,
-                     role VARCHAR(16) NOT NULL,
+                     role_name VARCHAR(16) NOT NULL,
                      index (id)
 );
-INSERT into role(role) VALUES ('admin');
-INSERT into role(role) VALUES ('user');
-INSERT into role(role) VALUES ('highUser');
+INSERT into role(role_name) VALUES ('admin');
+INSERT into role(role_name) VALUES ('user');
+INSERT into role(role_name) VALUES ('highUser');
 
 create table user(
                      id integer auto_increment primary key ,
