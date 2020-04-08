@@ -30,6 +30,9 @@ public class Result implements Serializable {
      *失败时返回的错误码
      */
     private String errMsg;
+    public static Result ofSuccess(){
+        return ofSuccess("");
+    }
     public static Result ofSuccess(Object data){
         Result result = new Result();
         result.success = true;

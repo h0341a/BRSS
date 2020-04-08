@@ -1,14 +1,14 @@
 package com.jycz.user.controller;
 
-import com.jycz.common.model.entity.User;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.response.Result;
-import com.jycz.user.model.dto.UserDTO;
+import com.jycz.user.model.dto.UserDto;
+import com.jycz.user.model.vo.UserVo;
 import com.jycz.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +52,11 @@ public class UserController {
     }
     @ApiOperation("用户注册")
     @GetMapping("/register")
-    public Result register(@Valid UserDTO userDTO){
-        return null;
+    public Result register(@Valid UserDto userDto) throws BusinessException {
+        if (StringUtils.isEmpty(userDto.getNickname())){
+            userDto.setNickname(userDto.getUsername());
+        }
+        UserVo userVo = userService.userRegister(userDto);
+        return Result.ofSuccess(userVo);
     }
 }
