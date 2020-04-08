@@ -3,6 +3,10 @@ create table role(
                      role VARCHAR(16) NOT NULL,
                      index (id)
 );
+INSERT into role(role) VALUES ('admin');
+INSERT into role(role) VALUES ('user');
+INSERT into role(role) VALUES ('highUser');
+
 create table user(
                      id integer auto_increment primary key ,
                      username varchar(32) NOT NULL UNIQUE ,
