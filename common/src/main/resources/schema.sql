@@ -64,6 +64,7 @@ create table book(
                      introduction varchar(336) NOT NULL ,
                      commit_date datetime default now(),
                      commit_user integer not null,
+                     status tinyint(1) not null default 0 comment '判断该书籍是否通过审核0未通过1通过',
                      FOREIGN KEY (commit_user) REFERENCES user(id)
 );
 create table user_recommend(
@@ -72,6 +73,7 @@ create table user_recommend(
                                content text,
                                stars INTEGER DEFAULT 0,
                                recommend_date datetime default now(),
+                               status tinyint(1) not null default 0 comment '判断该推荐是否通过审核0未通过1通过',
                                bid integer,
                                uid integer,
                                FOREIGN KEY (uid) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
