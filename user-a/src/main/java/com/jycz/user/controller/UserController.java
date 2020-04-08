@@ -14,21 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "负责用户账号的操作")
 @RestController
 public class UserController {
-    @GetMapping("/hello")
-    public Result hello(){
-        return Result.ofSuccess("123");
-    }
-    @GetMapping("/hello1")
-    public Result hello1(){
-        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
-    }
-    @GetMapping("/hello2")
-    public Result hello2(){
-        int i =2/0;
-        return Result.ofSuccess("123");
-    }
-    @GetMapping("/hello3")
-    public Result hello3() throws BusinessException {
-        throw new BusinessException(ErrCodeEnum.UNKNOWN_ERROR);
+    public Result register(){
+        return null;
     }
 }
