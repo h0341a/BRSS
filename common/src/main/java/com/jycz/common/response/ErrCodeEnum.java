@@ -9,7 +9,9 @@ public enum ErrCodeEnum implements ErrInfoInter {
     /**
      *
      */
-    UNKNOWN_ERROR(1, "未考虑到的错误");
+    UNKNOWN_ERROR(1, "未考虑到的错误"),
+    PARAMETERS_INVALID(101, "参数非法"),
+    PARAMETERS_VALIDATION_FAIL(101, "参数验证失败");
     private int errCode;
     private String errMsg;
 
