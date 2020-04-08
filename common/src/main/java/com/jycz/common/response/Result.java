@@ -47,14 +47,14 @@ public class Result implements Serializable {
 
     /**
      * 符合该错误码的错误提供可自定义的提示信息
-     * @param errCodeEnum 错误码
+     * @param errInfoInter 错误码
      * @param errorMsg 自定义的错误信息
      * @return result
      */
-    public static Result ofFail(ErrCodeEnum errCodeEnum, String errorMsg){
+    public static Result ofFail(ErrInfoInter errInfoInter, String errorMsg){
         Result result = new Result();
         result.success=false;
-        result.setErrCode(errCodeEnum.getErrCode());
+        result.setErrCode(errInfoInter.getErrCode());
         result.setErrMsg(errorMsg);
         return result;
     }
