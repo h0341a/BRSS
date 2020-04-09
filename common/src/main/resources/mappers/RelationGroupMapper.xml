@@ -22,7 +22,7 @@
     insert into relation_group (id, group_name)
     values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.RelationGroup">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.RelationGroup" keyProperty="id" useGeneratedKeys="true">
     insert into relation_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

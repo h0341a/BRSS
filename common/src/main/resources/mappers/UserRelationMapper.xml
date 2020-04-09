@@ -44,4 +44,7 @@
       </if>
     </trim>
   </insert>
+    <select id="selectStatusByUidAndIdolId" resultType="java.lang.Integer">
+      select status from user_relation where uid=#{uid} And idol_id=#{idolId}
+    </select>
 </mapper>

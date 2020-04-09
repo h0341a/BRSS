@@ -1,11 +1,13 @@
 package com.jycz.common.model.entity;
 
+import io.swagger.models.auth.In;
+
 public class UserRelation {
     private Integer uid;
 
     private Integer idolId;
 
-    private Boolean status;
+    private Integer status;
 
     private Integer ugid;
 
@@ -25,11 +27,11 @@ public class UserRelation {
         this.idolId = idolId;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

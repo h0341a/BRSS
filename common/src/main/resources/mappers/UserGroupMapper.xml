@@ -23,7 +23,7 @@
     insert into user_group (id, uid, gid)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserGroup">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserGroup" useGeneratedKeys="true" keyProperty="id">
     insert into user_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
