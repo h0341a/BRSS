@@ -15,8 +15,7 @@ public class BusinessException extends Exception implements ErrInfoInter {
     }
 
     public BusinessException(ErrInfoInter errInfoInter, String customMsg){
-        errInfoInter.setErrMsg(customMsg);
-        this.errInfoInter = errInfoInter;
+        this.errInfoInter = errInfoInter.setErrMsg(customMsg);
     }
 
     @Override
