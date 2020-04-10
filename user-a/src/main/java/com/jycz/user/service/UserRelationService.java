@@ -20,19 +20,19 @@ public interface UserRelationService {
      * 根据用户id拉入黑名单
      * @param uid 当前登录的用户id
      * @param targetId 目标id
+     * @return 是否加入成功
      */
-    public void joinBlacklist(Integer uid, Integer targetId);
-
+    public boolean joinBlacklist(Integer uid, Integer targetId) throws BusinessException;
     /**
      * 取消某个用户的关注
      * @param uid 当前用户id
      * @param targetId 目标id
      */
-    public void cancelFollow(Integer uid, Integer targetId);
+    public void cancelFollow(Integer uid, Integer targetId) throws BusinessException;
     /**
      * 取消某个用户的被拉黑
      * @param uid 当前用户id
      * @param targetId 目标id
      */
-    public void deleteFromBlacklist(Integer uid, Integer targetId);
+    public boolean deleteFromBlacklist(Integer uid, Integer targetId) throws BusinessException;
 }

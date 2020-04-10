@@ -9,10 +9,7 @@ import com.jycz.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -51,7 +48,7 @@ public class UserController {
         }
     }
     @ApiOperation("用户注册")
-    @GetMapping("/register")
+    @PostMapping("/register")
     public Result register(@Valid UserDto userDto) throws BusinessException {
         if (StringUtils.isEmpty(userDto.getNickname())){
             userDto.setNickname(userDto.getUsername());

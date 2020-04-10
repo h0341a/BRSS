@@ -44,7 +44,12 @@ public class UtuController {
 
     @ApiOperation("拉黑某人")
     @PostMapping("/blacklist/{targetId}")
-    public void blacklist(@PathVariable Integer targetId) {
+    public Result blacklist(@PathVariable Integer targetId) throws BusinessException {
+        Integer uid = 4;
+        if(userRelationService.joinBlacklist(uid,targetId)){
+            return Result.ofSuccess("已拉黑");
+        }
+        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
 
     @ApiOperation("取消关注")
