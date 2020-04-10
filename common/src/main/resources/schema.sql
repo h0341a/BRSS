@@ -41,14 +41,14 @@ create table user_group(
                            index (uid)
 );
 create table user_relation(
-                              uid integer not null ,
-                              idol_id integer not null ,
-                              status tinyint(1) not null COMMENT '用户关系状态:0为拉黑，1为关注,2为互相关注',
+                              source_id integer not null ,
+                              target_id integer not null ,
+                              status tinyint(1) not null COMMENT '用户关系状态:0为拉黑，1为关注',
                               ugid integer not null ,
-                              FOREIGN KEY (uid) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE ,
-                              FOREIGN KEY (idol_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+                              FOREIGN KEY (source_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+                              FOREIGN KEY (target_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE ,
                               FOREIGN KEY (ugid) REFERENCES user_group(id) ON DELETE CASCADE ON UPDATE CASCADE,
-                              index (uid)
+                              index (source_id)
 );
 create table user_message(
                              send_uid integer,
