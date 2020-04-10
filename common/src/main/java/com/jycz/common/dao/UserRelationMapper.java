@@ -1,8 +1,6 @@
 package com.jycz.common.dao;
 
-import com.jycz.common.model.entity.UserRelation;
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 

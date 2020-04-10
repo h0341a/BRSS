@@ -2,25 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jycz.common.dao.UserRelationMapper">
   <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserRelation">
-    <result column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="idol_id" jdbcType="INTEGER" property="idolId" />
+    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+    <result column="target_id" jdbcType="INTEGER" property="targetId" />
     <result column="status" jdbcType="BIT" property="status" />
     <result column="ugid" jdbcType="INTEGER" property="ugid" />
   </resultMap>
   <insert id="insert" parameterType="com.jycz.common.model.entity.UserRelation">
-    insert into user_relation (uid, idol_id, status, 
+    insert into user_relation (source_id, target_id, status,
       ugid)
-    values (#{uid,jdbcType=INTEGER}, #{idolId,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+    values (#{sourceId,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, #{status,jdbcType=BIT},
       #{ugid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserRelation">
     insert into user_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
+      <if test="sourceId != null">
+        source_id,
       </if>
-      <if test="idolId != null">
-        idol_id,
+      <if test="targetId != null">
+        target_id,
       </if>
       <if test="status != null">
         status,
@@ -30,11 +30,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=INTEGER},
+      <if test="sourceId != null">
+        #{sourceId,jdbcType=INTEGER},
       </if>
-      <if test="idolId != null">
-        #{idolId,jdbcType=INTEGER},
+      <if test="targetId != null">
+        #{targetId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
@@ -45,6 +45,6 @@
     </trim>
   </insert>
     <select id="selectStatusByUidAndIdolId" resultType="java.lang.Integer">
-      select status from user_relation where uid=#{uid} And idol_id=#{idolId}
+      select status from user_relation where source_id=#{uid} And target_id=#{idolId}
     </select>
 </mapper>

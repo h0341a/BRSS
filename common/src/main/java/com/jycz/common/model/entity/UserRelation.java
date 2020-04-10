@@ -1,37 +1,35 @@
 package com.jycz.common.model.entity;
 
-import io.swagger.models.auth.In;
-
 public class UserRelation {
-    private Integer uid;
+    private Integer sourceId;
 
-    private Integer idolId;
+    private Integer targetId;
 
-    private Integer status;
+    private Boolean status;
 
     private Integer ugid;
 
-    public Integer getUid() {
-        return uid;
+    public Integer getSourceId() {
+        return sourceId;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setSourceId(Integer sourceId) {
+        this.sourceId = sourceId;
     }
 
-    public Integer getIdolId() {
-        return idolId;
+    public Integer getTargetId() {
+        return targetId;
     }
 
-    public void setIdolId(Integer idolId) {
-        this.idolId = idolId;
+    public void setTargetId(Integer targetId) {
+        this.targetId = targetId;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
