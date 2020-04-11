@@ -40,4 +40,14 @@ public class UserRelation {
     public void setUgid(Integer ugid) {
         this.ugid = ugid;
     }
+
+    public UserRelation() {
+    }
+
+    public UserRelation(Integer sourceId, Integer targetId, Boolean status, Integer ugid) {
+        this.sourceId = sourceId;
+        this.targetId = targetId;
+        this.status = status;
+        this.ugid = ugid;
+    }
 }

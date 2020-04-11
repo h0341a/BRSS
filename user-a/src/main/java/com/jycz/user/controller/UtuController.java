@@ -28,8 +28,8 @@ public class UtuController {
     @PostMapping("/follow/{targetId}")
     public Result follow(@PathVariable Integer targetId, String groupName) throws BusinessException {
         //uid应该从session里拿
-        int uid = 2;
-        if (uid == targetId){
+        Integer uid = 2;
+        if (uid.equals(targetId)){
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
         }
         if (StringUtils.isEmpty(groupName)){
@@ -45,7 +45,10 @@ public class UtuController {
     @ApiOperation("拉黑某人")
     @PostMapping("/blacklist/{targetId}")
     public Result blacklist(@PathVariable Integer targetId) throws BusinessException {
-        Integer uid = 4;
+        Integer uid = 2;
+        if (uid.equals(targetId)){
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
+        }
         if(userRelationService.joinBlacklist(uid,targetId)){
             return Result.ofSuccess("已拉黑");
         }
@@ -54,12 +57,27 @@ public class UtuController {
 
     @ApiOperation("取消关注")
     @DeleteMapping("/follow/{targetId}")
-    public void cancelFollow(@PathVariable String targetId){
-
+    public Result cancelFollow(@PathVariable Integer targetId) throws BusinessException {
+        Integer uid = 2;
+        if (uid.equals(targetId)){
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
+        }
+        if (userRelationService.cancelFollow(uid ,targetId)){
+            return Result.ofSuccess("取消成功");
+        }
+        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR, "取消失败");
     }
     @ApiOperation("取消拉黑某人")
     @DeleteMapping("/blacklist/{targetId}")
-    public void deleteFromBlacklist(@PathVariable Integer targetId) {
+    public Result deleteFromBlacklist(@PathVariable Integer targetId) throws BusinessException {
+        Integer uid = 2;
+        if (uid.equals(targetId)){
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
+        }
+        if (userRelationService.deleteFromBlacklist(uid ,targetId)){
+            return Result.ofSuccess("取消成功");
+        }
+        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR, "取消失败");
     }
 
 }

@@ -44,7 +44,7 @@
       </if>
     </trim>
   </insert>
-    <select id="selectStatusByUidAndIdolId" resultType="java.lang.Integer">
-      select status from user_relation where source_id=#{uid} And target_id=#{idolId}
+    <select id="selectStatusByBothId" resultType="java.lang.Boolean">
+      select status from user_relation where source_id=#{sourceId} And target_id=#{targetId}
     </select>
 </mapper>
