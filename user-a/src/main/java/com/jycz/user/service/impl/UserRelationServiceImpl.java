@@ -61,6 +61,9 @@ public class UserRelationServiceImpl implements UserRelationService {
 
     @Override
     public boolean joinBlacklist(Integer sourceId, Integer targetId) throws BusinessException {
+        if (userMapper.selectByPrimaryKey(targetId) == null) {
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户不存在");
+        }
         String groupName = "黑名单";
         Integer userGroupId = this.getUgId(sourceId, groupName);
         Boolean status = userRelationMapper.selectStatusByBothId(sourceId, targetId);
@@ -80,6 +83,9 @@ public class UserRelationServiceImpl implements UserRelationService {
 
     @Override
     public boolean cancelFollow(Integer sourceId, Integer targetId) throws BusinessException {
+        if (userMapper.selectByPrimaryKey(targetId) == null) {
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户不存在");
+        }
         Boolean status = userRelationMapper.selectStatusByBothId(sourceId, targetId);
         if (status == null || !status) {
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "你还没有关注该用户呢");
@@ -91,6 +97,9 @@ public class UserRelationServiceImpl implements UserRelationService {
 
     @Override
     public boolean deleteFromBlacklist(Integer sourceId, Integer targetId) throws BusinessException {
+        if (userMapper.selectByPrimaryKey(targetId) == null) {
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户不存在");
+        }
         Boolean status = userRelationMapper.selectStatusByBothId(sourceId, targetId);
         if (status == null || status) {
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "用户之间不存在拉黑关系");
