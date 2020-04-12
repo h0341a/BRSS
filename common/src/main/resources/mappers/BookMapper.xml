@@ -30,7 +30,7 @@
       #{introduction,jdbcType=VARCHAR}, #{commitDate,jdbcType=TIMESTAMP}, #{commitUser,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.Book">
+  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.Book" keyProperty="id" useGeneratedKeys="true">
     insert into book
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

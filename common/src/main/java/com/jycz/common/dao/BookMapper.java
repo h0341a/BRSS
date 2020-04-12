@@ -1,8 +1,18 @@
 package com.jycz.common.dao;
 
 import com.jycz.common.model.entity.Book;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface BookMapper {
+    /**
+     * 根据图书名与作者查询书籍,如此是因为除了数据库id之外需要依靠书名+作者确定书籍唯一
+     * @param book 书籍信息
+     * @return id
+     */
+    @Select("select id from book where name=#{name} and author=#{author}")
+    Integer selectIdByNameAndAuthor(Book book);
     int deleteByPrimaryKey(Integer id);
 
     int insert(Book record);

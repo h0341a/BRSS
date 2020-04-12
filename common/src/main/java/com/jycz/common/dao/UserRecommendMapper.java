@@ -1,8 +1,14 @@
 package com.jycz.common.dao;
 
 import com.jycz.common.model.entity.UserRecommend;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserRecommendMapper {
+    @Select("select id from user_recommend where uid=#{uid} and bid=#{bid}")
+    Integer selectIdByUidAndBid(Integer uid, Integer bid);
     int deleteByPrimaryKey(Integer id);
 
     int insert(UserRecommend record);
