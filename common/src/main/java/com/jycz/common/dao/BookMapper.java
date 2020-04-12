@@ -4,6 +4,8 @@ import com.jycz.common.model.entity.Book;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BookMapper {
     /**
@@ -13,6 +15,8 @@ public interface BookMapper {
      */
     @Select("select id from book where name=#{name} and author=#{author}")
     Integer selectIdByNameAndAuthor(Book book);
+    @Select("select * from book where status = #{status}")
+    List<Book> selectAllByStatus(Integer status);
     int deleteByPrimaryKey(Integer id);
 
     int insert(Book record);

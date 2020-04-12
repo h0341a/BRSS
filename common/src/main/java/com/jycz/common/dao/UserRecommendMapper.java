@@ -5,10 +5,14 @@ import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRecommendMapper {
     @Select("select id from user_recommend where uid=#{uid} and bid=#{bid}")
     Integer selectIdByUidAndBid(Integer uid, Integer bid);
+
+    List<UserRecommend> selectToReviewList();
     int deleteByPrimaryKey(Integer id);
 
     int insert(UserRecommend record);

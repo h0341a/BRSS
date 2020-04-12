@@ -26,7 +26,11 @@
     from user_recommend
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectToReviewList" resultMap="ResultMapWithBLOBs">
+      select u.* from user_recommend u, book b
+      where u.status = 0 and u.bid = b.id and b.status = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_recommend
     where id = #{id,jdbcType=INTEGER}
   </delete>
