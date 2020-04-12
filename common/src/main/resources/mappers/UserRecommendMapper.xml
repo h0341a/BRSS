@@ -27,8 +27,11 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
     <select id="selectToReviewList" resultMap="ResultMapWithBLOBs">
-      select u.* from user_recommend u, book b
-      where u.status = 0 and u.bid = b.id and b.status = 1
+#       select u.* from user_recommend u, book b
+#       where u.status = 0 and u.bid = b.id and b.status = 1
+        select u.* from user_recommend u
+        join book b on u.bid = b.id and b.status = 1
+        where u.status = 0
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_recommend
