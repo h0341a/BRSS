@@ -81,7 +81,7 @@ create table user_recommend(
                                bid integer,
                                uid integer,
                                FOREIGN KEY (uid) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
-                               FOREIGN KEY (bid) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                               FOREIGN KEY (bid) REFERENCES book(id) ON DELETE CASCADE ON UPDATE CASCADE,
                                index (uid)
 );
 create table user_comment(
