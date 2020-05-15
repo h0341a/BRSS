@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ling
  * @data 2020/4/8 14:42
  */
-@Api(tags = "LoginController")
+@Api(tags = "LoginController:用户登录")
 @RestController
 public class LoginController {
     @PostMapping("/login")

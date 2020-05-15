@@ -7,7 +7,8 @@
         <module>admin</module>
         <module>startup</module>
         <module>common</module>
-        <module>user-a</module>
+        <module>consumer</module>
+        <module>book</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

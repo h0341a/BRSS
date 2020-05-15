@@ -9,23 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>startup</artifactId>
+    <artifactId>consumer</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.jycz</groupId>
-            <artifactId>admin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jycz</groupId>
-            <artifactId>consumer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jycz</groupId>
-            <artifactId>book</artifactId>
+            <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
 
 </project>
