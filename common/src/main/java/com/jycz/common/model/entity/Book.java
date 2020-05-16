@@ -14,6 +14,15 @@ public class Book {
     private Date commitDate;
 
     private Integer commitUser;
+    private Double rank;
+
+    public Double getRank() {
+        return rank;
+    }
+
+    public void setRank(Double rank) {
+        this.rank = rank;
+    }
 
     public Integer getId() {
         return id;

@@ -8,6 +8,7 @@
     <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="commit_date" jdbcType="TIMESTAMP" property="commitDate" />
     <result column="commit_user" jdbcType="INTEGER" property="commitUser" />
+    <result column="rank" jdbcType="DOUBLE" property="rank"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, name, author, introduction, commit_date, commit_user
@@ -18,7 +19,25 @@
     from book
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectBooksForHome" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List"/>
+      from book
+      <choose>
+        <when test="type == 'time'">
+        order by commit_date desc
+        </when>
+        <when test="type == 'rank'">
+        order by rank desc
+        </when>
+        <when test="type == 'random'">
+          order by rand()
+        </when>
+      </choose>
+
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>

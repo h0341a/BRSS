@@ -68,6 +68,7 @@ create table book(
                      introduction varchar(336) NOT NULL ,
                      commit_date datetime default now(),
                      commit_user integer not null,
+                     rank double default 0.00,
                      status tinyint(1) not null default 0 comment '判断该书籍是否通过审核0未通过1通过',
                      FOREIGN KEY (commit_user) REFERENCES user(id)
 );

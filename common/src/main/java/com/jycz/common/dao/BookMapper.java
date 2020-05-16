@@ -17,6 +17,7 @@ public interface BookMapper {
     Integer selectIdByNameAndAuthor(Book book);
     @Select("select * from book where status = #{status}")
     List<Book> selectAllByStatus(Integer status);
+    List<Book> selectBooksForHome(String type);
     int deleteByPrimaryKey(Integer id);
 
     int insert(Book record);

@@ -1,23 +1,14 @@
 package com.jycz.book.utils;
 
-import com.jycz.book.model.dto.RecommendDto;
+import com.jycz.book.model.vo.BookVo;
 import com.jycz.common.model.entity.Book;
-import com.jycz.common.model.entity.UserRecommend;
+import org.springframework.beans.BeanUtils;
 
 public class BookModelConverter {
-    public static Book recommendDtoToBook(Integer uid, RecommendDto recommendDto){
-        Book book = new Book();
-        book.setName(recommendDto.getBookName());
-        book.setAuthor(recommendDto.getBookAuthor());
-        book.setIntroduction(recommendDto.getIntroduction());
-        book.setCommitUser(uid);
-        return book;
+    public static BookVo bookToBookVo(Book book){
+        BookVo bookVo = new BookVo();
+        BeanUtils.copyProperties(book, bookVo);
+        return bookVo;
     }
-    public static UserRecommend recommendDtoToRecommend(Integer uid, Integer bid, RecommendDto recommendDto){
-        UserRecommend userRecommend = new UserRecommend();
-        userRecommend.setContent(recommendDto.getContent());
-        userRecommend.setUid(uid);
-        userRecommend.setBid(bid);
-        return userRecommend;
-    }
+
 }
