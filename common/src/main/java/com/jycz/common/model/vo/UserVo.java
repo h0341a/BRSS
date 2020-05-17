@@ -1,4 +1,4 @@
-package com.jycz.consumer.model.vo;
+package com.jycz.common.model.vo;
 
 import lombok.Data;
 

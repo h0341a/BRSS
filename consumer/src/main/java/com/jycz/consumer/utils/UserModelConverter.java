@@ -5,8 +5,8 @@ import com.jycz.common.model.entity.Book;
 import com.jycz.common.model.entity.User;
 import com.jycz.common.model.entity.UserRecommend;
 import com.jycz.consumer.model.dto.RecommendDto;
-import com.jycz.consumer.model.dto.UserDto;
-import com.jycz.consumer.model.vo.UserVo;
+import com.jycz.common.model.dto.UserDto;
+import com.jycz.common.model.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -14,16 +14,6 @@ import org.springframework.beans.BeanUtils;
  * @data 2020/4/8 12:43
  */
 public class UserModelConverter {
-    public static User userDtoToUser(UserDto userDto){
-        User user = new User();
-        BeanUtils.copyProperties(userDto, user);
-        return user;
-    }
-    public static UserVo userToUserVo(User user){
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(user, userVo);
-        return userVo;
-    }
     public static Book recommendDtoToBook(Integer uid, RecommendDto recommendDto){
         Book book = new Book();
         book.setName(recommendDto.getBookName());

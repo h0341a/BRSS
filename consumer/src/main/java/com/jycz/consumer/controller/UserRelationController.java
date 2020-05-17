@@ -7,6 +7,7 @@ import com.jycz.consumer.service.UserRelationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "UserRelationController:用户之间的关系")
 @RestController
+@RequestMapping("/user")
 public class UserRelationController {
     private final UserRelationService userRelationService;
 

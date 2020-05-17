@@ -3,15 +3,14 @@ create table role(
                      role_name VARCHAR(16) NOT NULL,
                      index (id)
 );
-INSERT into role(role_name) VALUES ('admin');
-INSERT into role(role_name) VALUES ('user');
-INSERT into role(role_name) VALUES ('highUser');
+INSERT into role(role_name) VALUES ('ROLE_ADMIN');
+INSERT into role(role_name) VALUES ('ROLE_USER');
 
 create table user(
                      id integer auto_increment primary key ,
                      username varchar(32) NOT NULL UNIQUE ,
                      nickname varchar(50) NOT NULL UNIQUE ,
-                     password varchar(16) NOT NULL,
+                     password varchar(128) NOT NULL,
                      role_id integer NOT NULL  ,
                      foreign key (role_id) references role(id) ON DELETE CASCADE ON UPDATE CASCADE,
                      index(username)

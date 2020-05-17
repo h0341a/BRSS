@@ -8,11 +8,12 @@ import com.jycz.common.model.entity.UserRecommend;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.consumer.model.dto.RecommendDto;
-import com.jycz.consumer.model.dto.UserDto;
-import com.jycz.consumer.model.vo.UserVo;
+import com.jycz.common.model.dto.UserDto;
+import com.jycz.common.model.vo.UserVo;
 import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,31 +34,6 @@ public class UserServiceImpl implements UserService {
         this.userInfoMapper = userInfoMapper;
         this.roleMapper = roleMapper;
         this.bookMapper = bookMapper;
-    }
-
-    @Override
-    public boolean usernameIsSave(String username) {
-        User user = userMapper.selectByUsername(username);
-        return user != null;
-    }
-
-    @Override
-    @Transactional(rollbackFor = {RuntimeException.class, Error.class})
-    public UserVo userRegister(UserDto userDto) throws BusinessException {
-        if (userMapper.selectByUsername(userDto.getUsername()) != null){
-            throw new BusinessException(ErrCodeEnum.PARAMETERS_VALIDATION_FAIL, "该用户名已存在");
-        }
-        Integer rid = roleMapper.selectIdByRoleName("user");
-        if (rid == null){
-            throw new BusinessException(ErrCodeEnum.DATA_ABORT, "该用户注册的角色不存在");
-        }
-        User user = UserModelConverter.userDtoToUser(userDto);
-        user.setRoleId(rid);
-        userMapper.insertSelective(user);
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUid(user.getId());
-        userInfoMapper.insertSelective(userInfo);
-        return UserModelConverter.userToUserVo(user);
     }
 
     @Override

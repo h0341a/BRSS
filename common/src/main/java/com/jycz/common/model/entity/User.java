@@ -1,5 +1,8 @@
 package com.jycz.common.model.entity;
 
+import lombok.ToString;
+
+@ToString
 public class User {
     private Integer id;
 

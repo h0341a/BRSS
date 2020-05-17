@@ -1,21 +1,69 @@
 package com.jycz.common.controller;
 
+import com.jycz.common.dao.UserMapper;
+import com.jycz.common.model.dto.UserDto;
+import com.jycz.common.model.vo.UserVo;
+import com.jycz.common.response.BusinessException;
+import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.response.Result;
+import com.jycz.common.service.LoginService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * @author ling
  * @data 2020/4/8 14:42
  */
-@Api(tags = "LoginController:用户登录")
+@Api(tags = "LoginController:用户登录注册")
 @RestController
 public class LoginController {
-    @PostMapping("/login")
-    public void login(){
+    private final LoginService loginService;
 
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    @PostMapping("/login")
+    public void login(String username, String password){
+
+    }
+    @ApiOperation("用户注册")
+    @PostMapping("/register")
+    public Result register(@Valid UserDto userDto) throws BusinessException {
+        if (StringUtils.isEmpty(userDto.getNickname())){
+            userDto.setNickname(userDto.getUsername());
+        }
+        UserVo userVo = loginService.userRegister(userDto);
+        return Result.ofSuccess(userVo);
+    }
+    @ApiOperation("判断当前用户名是否存在，且理想的结果应该是返回不存在。")
+    @GetMapping("/{username}/save")
+    public Result usernameIsSave(@PathVariable String username){
+        int usernameMinSize = 4;
+        int usernameMaxSize = 32;
+        //用户名只能小写字母开头
+        String regex = "^[a-z]+[a-zA-Z0-9]+$";
+        if (!username.matches(regex)) {
+            return Result.ofFail(ErrCodeEnum.PARAMETERS_INVALID);
+        }
+        System.out.println(username.matches(regex));
+        if (username.length() < usernameMinSize || username.length()> usernameMaxSize){
+            return Result.ofFail(ErrCodeEnum.PARAMETERS_INVALID);
+        }else{
+            if(!loginService.usernameIsSave(username)){
+                return Result.ofSuccess("用户名不存在");
+            }else{
+                return Result.ofFail(ErrCodeEnum.PARAMETERS_VALIDATION_FAIL);
+            }
+        }
     }
     @GetMapping("/logout")
     public void logout(){

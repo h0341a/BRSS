@@ -12,7 +12,6 @@ public interface UserMapper {
      * @param username 用户名
      * @return 返回值
      */
-    @Select("select * from user where username=#{username}")
     User selectByUsername(String username);
     int deleteByPrimaryKey(Integer id);
 

@@ -25,7 +25,6 @@ public class BookController {
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-
     @GetMapping("/books")
     public Result getShowBooks(
             @RequestParam(defaultValue = "time") String status,

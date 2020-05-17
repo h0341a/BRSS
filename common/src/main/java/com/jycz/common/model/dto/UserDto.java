@@ -1,4 +1,4 @@
-package com.jycz.consumer.model.dto;
+package com.jycz.common.model.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
