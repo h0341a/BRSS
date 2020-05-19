@@ -3,6 +3,7 @@ package com.jycz.consumer.controller;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.response.Result;
+import com.jycz.common.utils.GetUidBySecurity;
 import com.jycz.consumer.service.UserRelationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +29,7 @@ public class UserRelationController {
     @PostMapping("/follow/{targetId}")
     public Result follow(@PathVariable Integer targetId, String groupName) throws BusinessException {
         //uid应该从session里拿
-        Integer uid = 2;
+        Integer uid = GetUidBySecurity.getUid();
         if (uid.equals(targetId)){
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
         }
@@ -45,7 +46,7 @@ public class UserRelationController {
     @ApiOperation("拉黑某人")
     @PostMapping("/blacklist/{targetId}")
     public Result blacklist(@PathVariable Integer targetId) throws BusinessException {
-        Integer uid = 2;
+        Integer uid = GetUidBySecurity.getUid();
         if (uid.equals(targetId)){
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
         }
@@ -58,7 +59,7 @@ public class UserRelationController {
     @ApiOperation("取消关注")
     @DeleteMapping("/follow/{targetId}")
     public Result cancelFollow(@PathVariable Integer targetId) throws BusinessException {
-        Integer uid = 2;
+        Integer uid = GetUidBySecurity.getUid();
         if (uid.equals(targetId)){
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
         }
@@ -70,7 +71,7 @@ public class UserRelationController {
     @ApiOperation("取消拉黑某人")
     @DeleteMapping("/blacklist/{targetId}")
     public Result deleteFromBlacklist(@PathVariable Integer targetId) throws BusinessException {
-        Integer uid = 2;
+        Integer uid = GetUidBySecurity.getUid();
         if (uid.equals(targetId)){
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
         }
