@@ -1,6 +1,8 @@
-package com.jycz.book.model.vo;
+package com.jycz.common.model.vo;
 
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class BookVo {
@@ -21,4 +23,8 @@ public class BookVo {
      * 简述
      */
     private String introduction;
+    /**
+     * 收藏时间
+     */
+    private Date collectionDate;
 }

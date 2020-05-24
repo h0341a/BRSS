@@ -7,6 +7,9 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="collection_date" jdbcType="TIMESTAMP" property="collectionDate" />
   </resultMap>
+  <sql id="Base_Column_List">
+    bid, uid, status, collection_date
+  </sql>
   <insert id="insert" parameterType="com.jycz.common.model.entity.UserCollection">
     insert into user_collection (bid, uid, status, 
       collection_date)
@@ -44,4 +47,9 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from user_collection
+    where uid=#{uid}
+  </select>
 </mapper>

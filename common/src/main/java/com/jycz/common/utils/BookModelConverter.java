@@ -1,6 +1,6 @@
-package com.jycz.book.utils;
+package com.jycz.common.utils;
 
-import com.jycz.book.model.vo.BookVo;
+import com.jycz.common.model.vo.BookVo;
 import com.jycz.common.model.entity.Book;
 import org.springframework.beans.BeanUtils;
 

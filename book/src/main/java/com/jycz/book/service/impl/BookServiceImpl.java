@@ -2,13 +2,11 @@ package com.jycz.book.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jycz.book.model.vo.BookVo;
+import com.jycz.common.model.vo.BookVo;
 import com.jycz.book.service.BookService;
-import com.jycz.book.utils.BookModelConverter;
+import com.jycz.common.utils.BookModelConverter;
 import com.jycz.common.dao.BookMapper;
 import com.jycz.common.model.entity.Book;
-import com.jycz.common.response.BusinessException;
-import com.jycz.common.response.ErrCodeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

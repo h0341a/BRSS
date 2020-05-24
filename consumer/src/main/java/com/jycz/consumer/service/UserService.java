@@ -1,7 +1,11 @@
 package com.jycz.consumer.service;
 
+import com.github.pagehelper.PageInfo;
+import com.jycz.common.model.vo.BookVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.consumer.model.dto.RecommendDto;
+
+import java.util.List;
 
 /**
  * @author ling
@@ -17,4 +21,11 @@ public interface UserService {
      */
     public boolean addBookRecommend(Integer uid, RecommendDto recommendDto) throws BusinessException;
 
+    /**
+     * 获取用户收藏的书籍
+     * @param page 页码
+     * @param pageSize 页容量
+     * @return 书籍列表
+     */
+    public PageInfo<BookVo> getCollectBooks(int page, int pageSize);
 }
