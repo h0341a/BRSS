@@ -36,11 +36,4 @@ public class UserController {
         return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
 
-    @ApiOperation("获取用户收藏过的书籍")
-    @GetMapping("/collection")
-    public Result getBooks(@RequestParam(defaultValue = "0") int page,
-                           @RequestParam(defaultValue = "8") int pageSize){
-        return Result.ofSuccess(userService.getCollectBooks(page, pageSize));
-    }
-
 }

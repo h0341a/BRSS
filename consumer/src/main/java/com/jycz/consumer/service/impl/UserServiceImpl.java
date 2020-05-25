@@ -4,20 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jycz.common.dao.*;
 import com.jycz.common.model.entity.*;
-import com.jycz.common.model.vo.BookVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
-import com.jycz.common.utils.BookModelConverter;
 import com.jycz.common.utils.GetUidBySecurity;
 import com.jycz.consumer.model.dto.RecommendDto;
-import com.jycz.common.model.dto.UserDto;
-import com.jycz.common.model.vo.UserVo;
 import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,18 +58,4 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    @Override
-    public PageInfo<BookVo> getCollectBooks(int page, int pageSize) {
-        Integer uid = GetUidBySecurity.getUid();
-        PageHelper.startPage(page, pageSize);
-        List<UserCollection> collections = collectionMapper.selectByUid(uid);
-        List<BookVo> bookVoList = new ArrayList<>();
-        collections.forEach(collection -> {
-            Book book = bookMapper.selectByPrimaryKey(collection.getBid());
-            BookVo bookVo = BookModelConverter.bookToBookVo(book);
-            bookVo.setCollectionDate(collection.getCollectionDate());
-            bookVoList.add(bookVo);
-        });
-        return new PageInfo<BookVo>(bookVoList);
-    }
 }
