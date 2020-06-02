@@ -18,7 +18,7 @@ create table user(
 create table user_info(
                           uid INTEGER NOT NULL ,
                           bio VARCHAR(160),
-                          avatar_url VARCHAR(128),
+                          avatar_url VARCHAR(128) default 'https://www.gravatar.com/avatar/hash?d=mp',
                           fans_number INTEGER DEFAULT 0,
                           idol_number INTEGER DEFAULT 0,
                           read_books INTEGER DEFAULT 0,
