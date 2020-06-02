@@ -6,10 +6,11 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email"/>
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, nickname, password, role_id
+    id, username, nickname,email, password, role_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,7 +29,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jycz.common.model.entity.User">
-    insert into user (id, username, nickname, 
+    insert into user (id, username, email,nickname,
       password, role_id)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER})
@@ -41,6 +42,9 @@
       </if>
       <if test="username != null">
         username,
+      </if>
+      <if test="email != null">
+        email,
       </if>
       <if test="nickname != null">
         nickname,
@@ -58,6 +62,9 @@
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
       </if>
       <if test="nickname != null">
         #{nickname,jdbcType=VARCHAR},

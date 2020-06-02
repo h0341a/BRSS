@@ -8,6 +8,8 @@ public class User {
 
     private String username;
 
+    private String email;
+
     private String nickname;
 
     private String password;
@@ -28,6 +30,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNickname() {

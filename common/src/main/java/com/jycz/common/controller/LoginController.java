@@ -32,41 +32,35 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public void login(String username, String password){
+    public void login(String username, String password) {
 
     }
+
     @ApiOperation("用户注册")
     @PostMapping("/register")
     public Result register(@Valid UserDto userDto) throws BusinessException {
-        if (StringUtils.isEmpty(userDto.getNickname())){
-            userDto.setNickname(userDto.getUsername());
-        }
-        UserVo userVo = loginService.userRegister(userDto);
-        return Result.ofSuccess(userVo);
+        return Result.ofSuccess(loginService.userRegister(userDto));
     }
-    @ApiOperation("判断当前用户名是否存在，且理想的结果应该是返回不存在。")
-    @GetMapping("/{username}/save")
-    public Result usernameIsSave(@PathVariable String username){
+
+    @ApiOperation("判断当前用户名是否存在")
+    @GetMapping("/usernameIsSave")
+    public Result usernameIsSave(String username) {
         int usernameMinSize = 4;
         int usernameMaxSize = 32;
-        //用户名只能小写字母开头
-        String regex = "^[a-z]+[a-zA-Z0-9]+$";
-        if (!username.matches(regex)) {
+        if (!(username.length() >= usernameMinSize && username.length() <= usernameMaxSize)) {
             return Result.ofFail(ErrCodeEnum.PARAMETERS_INVALID);
-        }
-        System.out.println(username.matches(regex));
-        if (username.length() < usernameMinSize || username.length()> usernameMaxSize){
-            return Result.ofFail(ErrCodeEnum.PARAMETERS_INVALID);
-        }else{
-            if(!loginService.usernameIsSave(username)){
-                return Result.ofSuccess("用户名不存在");
-            }else{
-                return Result.ofFail(ErrCodeEnum.PARAMETERS_VALIDATION_FAIL);
+        } else {
+            if (loginService.usernameIsSave(username)) {
+                return Result.ofSuccess("用户名已存在");
+            } else {
+                return Result.ofFail(ErrCodeEnum.DATA_ABORT, "用户名不存在");
             }
+
         }
     }
+
     @GetMapping("/logout")
-    public void logout(){
+    public void logout() {
 
     }
 }

@@ -9,6 +9,7 @@ INSERT into role(role_name) VALUES ('ROLE_USER');
 create table user(
                      id integer auto_increment primary key ,
                      username varchar(32) NOT NULL UNIQUE ,
+                     email varchar(32) not null unique ,
                      nickname varchar(50) NOT NULL UNIQUE ,
                      password varchar(128) NOT NULL,
                      role_id integer NOT NULL  ,
