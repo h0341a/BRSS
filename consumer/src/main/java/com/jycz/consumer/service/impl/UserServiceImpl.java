@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final BookMapper bookMapper;
     private final UserRecommendMapper recommendMapper;
     private final UserCollectionMapper collectionMapper;
+
     public UserServiceImpl(UserMapper userMapper, UserInfoMapper userInfoMapper, RoleMapper roleMapper, BookMapper bookMapper, UserRecommendMapper recommendMapper, UserCollectionMapper collectionMapper) {
         this.userMapper = userMapper;
         this.userInfoMapper = userInfoMapper;
@@ -56,6 +57,11 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String getAvatarUrl(Integer uid) {
+        return userInfoMapper.selectAvatarUrlByUid(uid);
     }
 
 }

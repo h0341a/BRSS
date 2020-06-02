@@ -1,6 +1,5 @@
 package com.jycz.consumer.service;
 
-import com.github.pagehelper.PageInfo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.consumer.model.dto.RecommendDto;
 
@@ -17,6 +16,13 @@ public interface UserService {
      * @return 是否成功
      */
     public boolean addBookRecommend(Integer uid, RecommendDto recommendDto) throws BusinessException;
+
+    /**
+     * 获取用户信息
+     * @param uid 用户id
+     * @return 用户信息视图
+     */
+    public String getAvatarUrl(Integer uid);
 
 
 }

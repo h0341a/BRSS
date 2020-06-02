@@ -35,5 +35,10 @@ public class UserController {
         }
         return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
+    @GetMapping("/avatarUrl")
+    public Result getAvatarUrl(){
+        Integer uid = GetUidBySecurity.getUid();
+        return Result.ofSuccess(userService.getAvatarUrl(uid));
+    }
 
 }
