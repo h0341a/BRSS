@@ -12,6 +12,16 @@ import com.jycz.consumer.model.vo.RecommendVo;
 public interface UserService {
 
     /**
+     * 收藏或者取消收藏
+     * @param bid 书籍id
+     * @param option 0收藏，1取消
+     * @return
+     */
+    public boolean addOrDelCollection(Integer bid,int option);
+    public boolean addOrDelStar(Integer rid, int option);
+    public boolean isCollection(Integer bid);
+    public boolean isStar(Integer rid);
+    /**
      * 添加图书推荐
      * @param uid 用户id
      * @param recommendDto 相关信息

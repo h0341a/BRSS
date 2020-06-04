@@ -39,6 +39,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean addOrDelCollection(Integer bid, int option) {
+        int n = collectionMapper.selectByBidAndUid(GetUidBySecurity.getUid(), bid);
+        if (option == 0 && n == 0) {
+            UserCollection userCollection = new UserCollection();
+            userCollection.setBid(bid);
+            userCollection.setUid(GetUidBySecurity.getUid());
+            return collectionMapper.insertSelective(userCollection) != 0;
+        } else if (option == 1 && n == 1){
+            return collectionMapper.delete(GetUidBySecurity.getUid(), bid) != 0;
+        }else{
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean addOrDelStar(Integer rid, int option) {
+        return false;
+    }
+
+    @Override
+    public boolean isCollection(Integer bid) {
+        Integer uid = GetUidBySecurity.getUid();
+        return collectionMapper.selectByBidAndUid(uid, bid) != 0;
+    }
+
+    @Override
+    public boolean isStar(Integer rid) {
+        Integer uid = GetUidBySecurity.getUid();
+        return userMapper.selectStarByUidAndRid(uid, rid) != 0;
+    }
+
+    @Override
     public boolean addBookRecommend(Integer uid, RecommendDto recommendDto) throws BusinessException {
         Book book = UserModelConverter.recommendDtoToBook(uid, recommendDto);
         Integer bid = bookMapper.selectIdByNameAndAuthor(book);

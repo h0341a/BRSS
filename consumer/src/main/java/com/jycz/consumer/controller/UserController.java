@@ -38,6 +38,48 @@ public class UserController {
         return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
 
+    @ApiOperation("添加收藏书籍")
+    @PostMapping("/collection")
+    public Result addCollection(Integer bid) {
+        if (userService.addOrDelCollection(bid, 0)) {
+            return Result.ofSuccess("添加成功");
+        }
+        return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "你已收藏");
+    }
+
+    @ApiOperation("添加点赞记录")
+    @PostMapping("/star")
+    public Result addStar(Integer rid) {
+      return null;
+    }
+
+    @ApiOperation("取消喜爱")
+    @DeleteMapping("/star")
+    public Result cancelStar(Integer rid) {
+        return null;
+    }
+
+    @ApiOperation("取消收藏")
+    @DeleteMapping("/collection")
+    public Result cancelCollection(Integer bid) {
+        if (userService.addOrDelCollection(bid, 1)) {
+            return Result.ofSuccess("取消成功");
+        }
+        return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "你未收藏");
+    }
+
+    @ApiOperation("判断是否收藏过该书籍")
+    @GetMapping("/isCollection")
+    public Result isCollection(Integer bid) {
+        return Result.ofSuccess(userService.isCollection(bid));
+    }
+
+    @ApiOperation("判断是否点赞过该推荐")
+    @GetMapping("/isStar")
+    public Result isStar(Integer rid) {
+        return Result.ofSuccess(userService.isStar(rid));
+    }
+
     @ApiOperation("获取推荐")
     @GetMapping("/recommends")
     public Result getRecommends(@RequestParam(defaultValue = "0") int page,

@@ -1,6 +1,7 @@
 package com.jycz.common.dao;
 
 import com.jycz.common.model.entity.User;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,9 @@ public interface UserMapper {
      * @return 返回值
      */
     User selectByUsername(String username);
+    @Select("select count(*) from star where uid=#{uid} and rid=#{rid}")
+    int selectStarByUidAndRid(Integer uid, Integer rid);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
