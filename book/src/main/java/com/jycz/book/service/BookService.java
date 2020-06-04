@@ -2,8 +2,10 @@ package com.jycz.book.service;
 
 import com.github.pagehelper.PageInfo;
 import com.jycz.book.model.vo.BookVo;
+import com.jycz.book.model.vo.RecommendVo;
 
 public interface BookService {
+    public PageInfo<RecommendVo> getRecommends(int page, int pageSize);
     public PageInfo<BookVo> getBooks(String status, int page, int pageSize);
     /**
      * 获取用户收藏的书籍

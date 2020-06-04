@@ -11,7 +11,8 @@ import java.util.List;
 public interface UserRecommendMapper {
     @Select("select id from user_recommend where uid=#{uid} and bid=#{bid}")
     Integer selectIdByUidAndBid(Integer uid, Integer bid);
-
+    @Select("select * from user_recommend")
+    List<UserRecommend> selectAll();
     @Select("select * from user_recommend where uid=#{uid}")
     List<UserRecommend> selectByUid(Integer uid);
 

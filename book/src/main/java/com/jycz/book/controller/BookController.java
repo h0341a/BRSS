@@ -40,6 +40,14 @@ public class BookController {
         return Result.ofSuccess(bookService.getBooks(status, page, pageSize));
     }
 
+    @ApiOperation("获取首页展示推荐")
+    @GetMapping("/recommends")
+    public Result getHomeRecommends(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int pageSize) throws BusinessException {
+        return Result.ofSuccess(bookService.getRecommends(page, pageSize));
+    }
+
     @ApiOperation("获取用户收藏书籍")
     @GetMapping("/user/collect")
     public Result getCollectBooks(@RequestParam(defaultValue = "0") int page,
