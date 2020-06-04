@@ -19,20 +19,22 @@ public class UserModelConverter {
         Book book = new Book();
         book.setName(recommendDto.getBookName());
         book.setAuthor(recommendDto.getBookAuthor());
-        book.setIntroduction(recommendDto.getIntroduction());
         book.setCommitUser(uid);
         return book;
     }
     public static UserRecommend recommendDtoToRecommend(Integer uid, Integer bid, RecommendDto recommendDto){
         UserRecommend userRecommend = new UserRecommend();
+        userRecommend.setTitle(recommendDto.getTitle());
         userRecommend.setContent(recommendDto.getContent());
         userRecommend.setUid(uid);
         userRecommend.setBid(bid);
         return userRecommend;
     }
-    public static RecommendVo recommendToRecommendVo(UserRecommend recommend){
+    public static RecommendVo recommendAndBookToRecommendVo(UserRecommend recommend, Book book){
         RecommendVo recommendVo = new RecommendVo();
         BeanUtils.copyProperties(recommend, recommendVo);
+        recommendVo.setBookName(book.getName());
+        recommendVo.setAuthor(book.getAuthor());
         return recommendVo;
     }
 

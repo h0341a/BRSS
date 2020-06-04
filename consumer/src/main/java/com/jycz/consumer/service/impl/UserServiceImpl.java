@@ -11,7 +11,6 @@ import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.consumer.model.vo.RecommendVo;
 import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,10 +65,10 @@ public class UserServiceImpl implements UserService {
         Integer uid = GetUidBySecurity.getUid();
         PageHelper.startPage(page, pageSize);
         List<UserRecommend> recommendList = recommendMapper.selectByUid(uid);
-
         List<RecommendVo> recommendVoList = new ArrayList<>();
         recommendList.forEach(recommend -> {
-            recommendVoList.add(UserModelConverter.recommendToRecommendVo(recommend));
+            Book book = bookMapper.selectByPrimaryKey(recommend.getBid());
+            recommendVoList.add(UserModelConverter.recommendAndBookToRecommendVo(recommend, book));
         });
         return new PageInfo<RecommendVo>(recommendVoList);
     }
