@@ -1,7 +1,9 @@
 package com.jycz.consumer.service;
 
+import com.github.pagehelper.PageInfo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.consumer.model.dto.RecommendDto;
+import com.jycz.consumer.model.vo.RecommendVo;
 
 /**
  * @author ling
@@ -16,11 +18,14 @@ public interface UserService {
      * @return 是否成功
      */
     public boolean addBookRecommend(Integer uid, RecommendDto recommendDto) throws BusinessException;
-
     /**
-     * 获取用户信息
+     * 获取用户创建的推荐的列表
+     */
+    public PageInfo<RecommendVo> getRecommends(int page, int pageSize);
+    /**
+     * 获取用户头像
      * @param uid 用户id
-     * @return 用户信息视图
+     * @return 用户头像
      */
     public String getAvatarUrl(Integer uid);
 

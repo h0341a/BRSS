@@ -8,6 +8,8 @@ public class UserRecommend {
     private String title;
 
     private Integer stars;
+    private Integer comments;
+    private Integer collects;
 
     private Date recommendDate;
 
@@ -16,6 +18,22 @@ public class UserRecommend {
     private Integer uid;
 
     private String content;
+
+    public Integer getComments() {
+        return comments;
+    }
+
+    public void setComments(Integer comments) {
+        this.comments = comments;
+    }
+
+    public Integer getCollects() {
+        return collects;
+    }
+
+    public void setCollects(Integer collects) {
+        this.collects = collects;
+    }
 
     public Integer getId() {
         return id;

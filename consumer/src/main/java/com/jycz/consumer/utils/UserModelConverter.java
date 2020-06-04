@@ -7,6 +7,7 @@ import com.jycz.common.model.entity.UserRecommend;
 import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.common.model.dto.UserDto;
 import com.jycz.common.model.vo.UserVo;
+import com.jycz.consumer.model.vo.RecommendVo;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -28,6 +29,11 @@ public class UserModelConverter {
         userRecommend.setUid(uid);
         userRecommend.setBid(bid);
         return userRecommend;
+    }
+    public static RecommendVo recommendToRecommendVo(UserRecommend recommend){
+        RecommendVo recommendVo = new RecommendVo();
+        BeanUtils.copyProperties(recommend, recommendVo);
+        return recommendVo;
     }
 
 }

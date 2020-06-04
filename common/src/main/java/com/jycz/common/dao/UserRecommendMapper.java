@@ -12,7 +12,11 @@ public interface UserRecommendMapper {
     @Select("select id from user_recommend where uid=#{uid} and bid=#{bid}")
     Integer selectIdByUidAndBid(Integer uid, Integer bid);
 
+    @Select("select * from user_recommend where uid=#{uid}")
+    List<UserRecommend> selectByUid(Integer uid);
+
     List<UserRecommend> selectToReviewList();
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(UserRecommend record);

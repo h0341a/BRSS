@@ -5,6 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="stars" jdbcType="INTEGER" property="stars" />
+    <result column="comments" jdbcType="INTEGER" property="comments" />
+    <result column="collects" jdbcType="INTEGER" property="collects" />
     <result column="recommend_date" jdbcType="TIMESTAMP" property="recommendDate" />
     <result column="bid" jdbcType="INTEGER" property="bid" />
     <result column="uid" jdbcType="INTEGER" property="uid" />

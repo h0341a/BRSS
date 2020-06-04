@@ -23,20 +23,31 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    @ApiOperation("添加推荐")
     @PostMapping("/recommend")
     public Result addBookRecommend(@Valid RecommendDto recommendDto) throws BusinessException {
         Integer uid = GetUidBySecurity.getUid();
-        if(userService.addBookRecommend(uid, recommendDto)){
+        if (userService.addBookRecommend(uid, recommendDto)) {
             return Result.ofSuccess("添加推荐成功");
         }
         return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
+
+    @ApiOperation("获取推荐")
+    @GetMapping("/recommends")
+    public Result getRecommends(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "8") int pageSize) {
+        return Result.ofSuccess(userService.getRecommends(page, pageSize));
+    }
+
+    @ApiOperation("获取头像地址")
     @GetMapping("/avatarUrl")
-    public Result getAvatarUrl(){
+    public Result getAvatarUrl() {
         Integer uid = GetUidBySecurity.getUid();
         return Result.ofSuccess(userService.getAvatarUrl(uid));
     }
