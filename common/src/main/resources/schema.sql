@@ -93,14 +93,16 @@ create table book
 );
 create table user_recommend
 (
-    id             integer auto_increment primary key,
-    title          varchar(128),
-    content        text,
-    stars          INTEGER             DEFAULT 0,
-    recommend_date datetime            default now(),
-    status         tinyint(1) not null default 0 comment '判断该推荐是否通过审核0未通过1通过',
-    bid            integer,
-    uid            integer,
+    id       integer auto_increment primary key,
+    title    varchar(128),
+    content  text,
+    stars    INTEGER             DEFAULT 0,
+    comments INTEGER             DEFAULT 0,
+    collects INTEGER             default 0,
+        recommend_date datetime default now(),
+    status   tinyint(1) not null default 0 comment '判断该推荐是否通过审核0未通过1通过',
+    bid      integer,
+    uid      integer,
     FOREIGN KEY (uid) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (bid) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
     index (uid)
