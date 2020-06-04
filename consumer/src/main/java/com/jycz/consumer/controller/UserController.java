@@ -50,13 +50,21 @@ public class UserController {
     @ApiOperation("添加点赞记录")
     @PostMapping("/star")
     public Result addStar(Integer rid) {
-      return null;
+        if (userService.addOrDelStar(rid, 0)){
+            return Result.ofSuccess("点赞成功");
+
+        }
+        return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "你已点赞");
     }
 
     @ApiOperation("取消喜爱")
     @DeleteMapping("/star")
     public Result cancelStar(Integer rid) {
-        return null;
+        if (userService.addOrDelStar(rid, 1)){
+            return Result.ofSuccess("取消成功");
+
+        }
+        return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "你未点赞");
     }
 
     @ApiOperation("取消收藏")

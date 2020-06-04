@@ -46,9 +46,9 @@ public class UserServiceImpl implements UserService {
             userCollection.setBid(bid);
             userCollection.setUid(GetUidBySecurity.getUid());
             return collectionMapper.insertSelective(userCollection) != 0;
-        } else if (option == 1 && n == 1){
+        } else if (option == 1 && n == 1) {
             return collectionMapper.delete(GetUidBySecurity.getUid(), bid) != 0;
-        }else{
+        } else {
             return false;
         }
 
@@ -56,6 +56,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addOrDelStar(Integer rid, int option) {
+        int n = userMapper.selectStarByUidAndRid(GetUidBySecurity.getUid(), rid);
+        if (option == 0 && n == 0) {
+            userMapper.insertStar(GetUidBySecurity.getUid(), rid);
+            return true;
+        } else if (option == 1 && n == 1) {
+            userMapper.deleteStar(GetUidBySecurity.getUid(), rid);
+            return true;
+        }
         return false;
     }
 
