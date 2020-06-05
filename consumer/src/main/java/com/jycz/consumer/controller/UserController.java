@@ -1,10 +1,12 @@
 package com.jycz.consumer.controller;
 
+import com.jycz.common.model.entity.UserInfo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.response.Result;
 import com.jycz.common.utils.GetUidBySecurity;
 import com.jycz.consumer.model.dto.RecommendDto;
+import com.jycz.consumer.model.dto.UserInfoDto;
 import com.jycz.consumer.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -99,6 +101,14 @@ public class UserController {
     @GetMapping("/info")
     public Result getUserInfo(){
         return Result.ofSuccess(userService.getUserInfo());
+    }
+    @ApiOperation("修改用户信息")
+    @PostMapping("/info")
+    public Result alterUserInfo(UserInfoDto userInfoDto){
+        if(userService.updateUserInfo(userInfoDto)){
+            return Result.ofSuccess("修改成功!");
+        }
+        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
     @ApiOperation("获取头像地址")
     @GetMapping("/avatarUrl")

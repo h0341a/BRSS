@@ -4,13 +4,11 @@ import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.response.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.UUID;
 
 @Api(tags = "图片服务器")
@@ -18,9 +16,23 @@ import java.util.UUID;
 public class ImgUploadController {
     private final String LOCAL_IMG_FILE = "/home/ling/development/IdeaProjects/brss/common/src/main/resources/img/";
 
+    @DeleteMapping("/img")
+    public Result deleteImg(String imgName){
+        String localPath = LOCAL_IMG_FILE + imgName;
+        File file = new File(localPath);
+        if(file.exists()){
+            if(file.delete()){
+                return Result.ofSuccess("删除成功");
+            }else{
+                return Result.ofFail(ErrCodeEnum.DATA_ABORT, "图片存在，但是删除失败");
+            }
+        }else{
+            return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "图片不存在");
+        }
+    }
+
     @PostMapping("/upload")
     public Result imageUpload(@RequestParam("uploadFile") MultipartFile uploadImg) {
-        System.out.println(uploadImg);
         if (uploadImg == null) {
             return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "图片不能为空");
         } else if (uploadImg.getSize() > 1024 * 1024 * 10) {

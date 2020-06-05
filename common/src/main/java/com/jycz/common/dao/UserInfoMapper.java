@@ -10,6 +10,7 @@ public interface UserInfoMapper {
     @Select("select avatar_url from user_info where uid =#{uid}")
     String selectAvatarUrlByUid(Integer uid);
     UserInfo selectByUid(Integer uid);
+    int updateByUidSelective(UserInfo userInfoDto);
     int insert(UserInfo record);
 
     int insertSelective(UserInfo record);

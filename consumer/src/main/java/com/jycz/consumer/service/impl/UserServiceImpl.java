@@ -8,11 +8,14 @@ import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.utils.GetUidBySecurity;
 import com.jycz.consumer.model.dto.RecommendDto;
+import com.jycz.consumer.model.dto.UserInfoDto;
 import com.jycz.consumer.model.vo.RecommendVo;
 import com.jycz.consumer.model.vo.UserInfoVo;
 import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,29 @@ public class UserServiceImpl implements UserService {
         UserInfo userInfo = userInfoMapper.selectByUid(GetUidBySecurity.getUid());
         User user = userMapper.selectByPrimaryKey(GetUidBySecurity.getUid());
         return UserModelConverter.userInfoToUserInfoVo(userInfo, user);
+    }
+
+    @Override
+    public boolean updateUserInfo(UserInfoDto userInfoDto) {
+        int n = 0,m = 0;
+        if (!StringUtils.isEmpty(userInfoDto.getNickname())) {
+            User user = new User();
+            user.setId(GetUidBySecurity.getUid());
+            user.setNickname(userInfoDto.getNickname());
+            n = userMapper.updateByPrimaryKeySelective(user);
+        }
+        UserInfo userInfo = new UserInfo();
+        if (StringUtils.isEmpty(userInfo.getBio())){
+            userInfo.setBio(null);
+        }
+        if (StringUtils.isEmpty(userInfo.getAvatarUrl())){
+            userInfo.setAvatarUrl(null);
+        }
+        userInfo.setUid(GetUidBySecurity.getUid());
+        userInfo.setAvatarUrl(userInfoDto.getAvatar());
+        userInfo.setBio(userInfoDto.getBio());
+        m =userInfoMapper.updateByUidSelective(userInfo);
+        return n == 1 || m == 1;
     }
 
     @Override

@@ -74,7 +74,19 @@
       </if>
     </trim>
   </insert>
-  <select id="selectByUid" resultMap="BaseResultMap">
+    <update id="updateByUidSelective">
+      update user_info
+      <set>
+        <if test="bio != null">
+          bio = #{bio,jdbcType=VARCHAR},
+        </if>
+        <if test="avatarUrl != null">
+          avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+        </if>
+      </set>
+      where uid = #{uid,jdbcType=INTEGER}
+    </update>
+    <select id="selectByUid" resultMap="BaseResultMap">
     select * from user_info where uid=#{uid}
   </select>
 </mapper>
