@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Book {
     private Integer id;
-
+    private String coverUrl;
     private String name;
 
     private String author;
@@ -15,6 +15,14 @@ public class Book {
 
     private Integer commitUser;
     private Double rank;
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
 
     public Double getRank() {
         return rank;

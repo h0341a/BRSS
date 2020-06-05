@@ -93,8 +93,16 @@ public class UserServiceImpl implements UserService {
         int n = userMapper.selectStarByUidAndRid(GetUidBySecurity.getUid(), rid);
         if (option == 0 && n == 0) {
             userMapper.insertStar(GetUidBySecurity.getUid(), rid);
+            UserRecommend userRecommend = recommendMapper.selectByPrimaryKey(rid);
+            userRecommend.setStars(userRecommend.getStars() + 1);
+            recommendMapper.updateByPrimaryKey(userRecommend);
             return true;
         } else if (option == 1 && n == 1) {
+            UserRecommend userRecommend = recommendMapper.selectByPrimaryKey(rid);
+            if(userRecommend.getStars() > 1){
+                userRecommend.setStars(userRecommend.getStars() - 1);
+            }
+            recommendMapper.updateByPrimaryKey(userRecommend);
             userMapper.deleteStar(GetUidBySecurity.getUid(), rid);
             return true;
         }

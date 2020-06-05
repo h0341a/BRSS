@@ -14,6 +14,7 @@ public class RecommendDto {
     /**
      * 书籍封面
      */
+    @NotBlank(message = "封面不能为空")
     String coverUrl;
     /**
      * 书名

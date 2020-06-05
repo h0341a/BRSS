@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 public class UserModelConverter {
     public static Book recommendDtoToBook(Integer uid, RecommendDto recommendDto){
         Book book = new Book();
+        book.setCoverUrl(recommendDto.getCoverUrl());
         book.setName(recommendDto.getBookName());
         book.setAuthor(recommendDto.getBookAuthor());
         book.setCommitUser(uid);
