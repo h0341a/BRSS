@@ -9,7 +9,6 @@ public class UserRecommend {
 
     private Integer stars;
     private Integer comments;
-    private Integer collects;
 
     private Date recommendDate;
 
@@ -25,14 +24,6 @@ public class UserRecommend {
 
     public void setComments(Integer comments) {
         this.comments = comments;
-    }
-
-    public Integer getCollects() {
-        return collects;
-    }
-
-    public void setCollects(Integer collects) {
-        this.collects = collects;
     }
 
     public Integer getId() {
