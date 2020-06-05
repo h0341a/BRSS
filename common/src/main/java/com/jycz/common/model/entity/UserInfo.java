@@ -9,13 +9,13 @@ public class UserInfo {
 
     private String avatarUrl;
 
-    private Integer fansNumber;
+    private Integer fans;
 
-    private Integer idolNumber;
+    private Integer idols;
 
-    private Integer readBooks;
+    private Integer recommends;
 
-    private Integer unreadBooks;
+    private Integer collections;
 
     private Date registerDate;
 
@@ -43,36 +43,36 @@ public class UserInfo {
         this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
 
-    public Integer getFansNumber() {
-        return fansNumber;
+    public Integer getFans() {
+        return fans;
     }
 
-    public void setFansNumber(Integer fansNumber) {
-        this.fansNumber = fansNumber;
+    public void setFans(Integer fans) {
+        this.fans = fans;
     }
 
-    public Integer getIdolNumber() {
-        return idolNumber;
+    public Integer getIdols() {
+        return idols;
     }
 
-    public void setIdolNumber(Integer idolNumber) {
-        this.idolNumber = idolNumber;
+    public void setIdols(Integer idols) {
+        this.idols = idols;
     }
 
-    public Integer getReadBooks() {
-        return readBooks;
+    public Integer getRecommends() {
+        return recommends;
     }
 
-    public void setReadBooks(Integer readBooks) {
-        this.readBooks = readBooks;
+    public void setRecommends(Integer recommends) {
+        this.recommends = recommends;
     }
 
-    public Integer getUnreadBooks() {
-        return unreadBooks;
+    public Integer getCollections() {
+        return collections;
     }
 
-    public void setUnreadBooks(Integer unreadBooks) {
-        this.unreadBooks = unreadBooks;
+    public void setCollections(Integer collections) {
+        this.collections = collections;
     }
 
     public Date getRegisterDate() {

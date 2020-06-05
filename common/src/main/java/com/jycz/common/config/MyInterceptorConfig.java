@@ -13,5 +13,7 @@ public class MyInterceptorConfig extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**").addResourceLocations("file:" + UPLOAD_FOLDER);
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

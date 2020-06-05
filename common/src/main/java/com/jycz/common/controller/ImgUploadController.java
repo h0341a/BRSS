@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,8 @@ public class ImgUploadController {
     private final String LOCAL_IMG_FILE = "/home/ling/development/IdeaProjects/brss/common/src/main/resources/img/";
 
     @PostMapping("/upload")
-    public Result imageUpload(MultipartFile uploadImg) {
+    public Result imageUpload(@RequestParam("uploadFile") MultipartFile uploadImg) {
+        System.out.println(uploadImg);
         if (uploadImg == null) {
             return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "图片不能为空");
         } else if (uploadImg.getSize() > 1024 * 1024 * 10) {

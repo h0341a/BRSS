@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface UserInfoMapper {
     @Select("select avatar_url from user_info where uid =#{uid}")
     String selectAvatarUrlByUid(Integer uid);
+    UserInfo selectByUid(Integer uid);
     int insert(UserInfo record);
 
     int insertSelective(UserInfo record);

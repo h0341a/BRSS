@@ -5,19 +5,19 @@
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="bio" jdbcType="VARCHAR" property="bio" />
     <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
-    <result column="fans_number" jdbcType="INTEGER" property="fansNumber" />
-    <result column="idol_number" jdbcType="INTEGER" property="idolNumber" />
-    <result column="read_books" jdbcType="INTEGER" property="readBooks" />
-    <result column="unread_books" jdbcType="INTEGER" property="unreadBooks" />
+    <result column="fans" jdbcType="INTEGER" property="fans" />
+    <result column="idols" jdbcType="INTEGER" property="idols" />
+    <result column="recommends" jdbcType="INTEGER" property="recommends" />
+    <result column="collections" jdbcType="INTEGER" property="collections" />
     <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
   </resultMap>
   <insert id="insert" parameterType="com.jycz.common.model.entity.UserInfo">
     insert into user_info (uid, bio, avatar_url, 
-      fans_number, idol_number, read_books, 
-      unread_books, register_date)
+      fans, idols, recommends,
+      collectionss, register_date)
     values (#{uid,jdbcType=INTEGER}, #{bio,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
-      #{fansNumber,jdbcType=INTEGER}, #{idolNumber,jdbcType=INTEGER}, #{readBooks,jdbcType=INTEGER}, 
-      #{unreadBooks,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP})
+      #{fans,jdbcType=INTEGER}, #{idols,jdbcType=INTEGER}, #{recommendss,jdbcType=INTEGER},
+      #{collectionss,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserInfo">
     insert into user_info
@@ -31,16 +31,16 @@
       <if test="avatarUrl != null">
         avatar_url,
       </if>
-      <if test="fansNumber != null">
+      <if test="fans != null">
         fans_number,
       </if>
-      <if test="idolNumber != null">
+      <if test="idols != null">
         idol_number,
       </if>
-      <if test="readBooks != null">
+      <if test="recommends != null">
         read_books,
       </if>
-      <if test="unreadBooks != null">
+      <if test="collections != null">
         unread_books,
       </if>
       <if test="registerDate != null">
@@ -57,21 +57,24 @@
       <if test="avatarUrl != null">
         #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="fansNumber != null">
-        #{fansNumber,jdbcType=INTEGER},
+      <if test="fans != null">
+        #{fans,jdbcType=INTEGER},
       </if>
-      <if test="idolNumber != null">
-        #{idolNumber,jdbcType=INTEGER},
+      <if test="idols != null">
+        #{idols,jdbcType=INTEGER},
       </if>
-      <if test="readBooks != null">
-        #{readBooks,jdbcType=INTEGER},
+      <if test="recommends != null">
+        #{recommends,jdbcType=INTEGER},
       </if>
-      <if test="unreadBooks != null">
-        #{unreadBooks,jdbcType=INTEGER},
+      <if test="collections != null">
+        #{collections,jdbcType=INTEGER},
       </if>
       <if test="registerDate != null">
         #{registerDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select * from user_info where uid=#{uid}
+  </select>
 </mapper>

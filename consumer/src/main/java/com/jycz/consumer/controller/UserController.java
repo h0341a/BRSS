@@ -95,6 +95,11 @@ public class UserController {
         return Result.ofSuccess(userService.getRecommends(page, pageSize));
     }
 
+    @ApiOperation("获取用户信息")
+    @GetMapping("/info")
+    public Result getUserInfo(){
+        return Result.ofSuccess(userService.getUserInfo());
+    }
     @ApiOperation("获取头像地址")
     @GetMapping("/avatarUrl")
     public Result getAvatarUrl() {

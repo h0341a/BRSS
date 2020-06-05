@@ -3,11 +3,13 @@ package com.jycz.consumer.utils;
 
 import com.jycz.common.model.entity.Book;
 import com.jycz.common.model.entity.User;
+import com.jycz.common.model.entity.UserInfo;
 import com.jycz.common.model.entity.UserRecommend;
 import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.common.model.dto.UserDto;
 import com.jycz.common.model.vo.UserVo;
 import com.jycz.consumer.model.vo.RecommendVo;
+import com.jycz.consumer.model.vo.UserInfoVo;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -36,6 +38,14 @@ public class UserModelConverter {
         recommendVo.setBookName(book.getName());
         recommendVo.setAuthor(book.getAuthor());
         return recommendVo;
+    }
+
+    public static UserInfoVo userInfoToUserInfoVo(UserInfo userInfo, User user){
+        UserInfoVo userInfoVo = new UserInfoVo();
+        BeanUtils.copyProperties(userInfo, userInfoVo);
+        userInfoVo.setNickname(user.getNickname());
+        userInfoVo.setEmail(user.getEmail());
+        return userInfoVo;
     }
 
 }

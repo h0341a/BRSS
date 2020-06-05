@@ -4,12 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.consumer.model.vo.RecommendVo;
+import com.jycz.consumer.model.vo.UserInfoVo;
 
 /**
  * @author ling
  * @data 2020/4/8 11:25
  */
 public interface UserService {
+    public UserInfoVo getUserInfo();
 
     /**
      * 收藏或者取消收藏

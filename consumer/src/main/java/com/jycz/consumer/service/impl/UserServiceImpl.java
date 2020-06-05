@@ -9,6 +9,7 @@ import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.utils.GetUidBySecurity;
 import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.consumer.model.vo.RecommendVo;
+import com.jycz.consumer.model.vo.UserInfoVo;
 import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,13 @@ public class UserServiceImpl implements UserService {
         this.bookMapper = bookMapper;
         this.recommendMapper = recommendMapper;
         this.collectionMapper = collectionMapper;
+    }
+
+    @Override
+    public UserInfoVo getUserInfo() {
+        UserInfo userInfo = userInfoMapper.selectByUid(GetUidBySecurity.getUid());
+        User user = userMapper.selectByPrimaryKey(GetUidBySecurity.getUid());
+        return UserModelConverter.userInfoToUserInfoVo(userInfo, user);
     }
 
     @Override
