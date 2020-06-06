@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUserInfo(UserInfoDto userInfoDto) {
-        int n = 0,m = 0;
+        int n = 0, m = 0;
         if (!StringUtils.isEmpty(userInfoDto.getNickname())) {
             User user = new User();
             user.setId(GetUidBySecurity.getUid());
@@ -59,29 +59,37 @@ public class UserServiceImpl implements UserService {
             n = userMapper.updateByPrimaryKeySelective(user);
         }
         UserInfo userInfo = new UserInfo();
-        if (StringUtils.isEmpty(userInfo.getBio())){
-            userInfo.setBio(null);
-        }
-        if (StringUtils.isEmpty(userInfo.getAvatarUrl())){
-            userInfo.setAvatarUrl(null);
-        }
         userInfo.setUid(GetUidBySecurity.getUid());
-        userInfo.setAvatarUrl(userInfoDto.getAvatar());
-        userInfo.setBio(userInfoDto.getBio());
-        m =userInfoMapper.updateByUidSelective(userInfo);
+        userInfo.setBio(!StringUtils.isEmpty(userInfoDto.getBio()) ? userInfoDto.getBio() : null);
+        userInfo.setAvatarUrl(!StringUtils.isEmpty(userInfoDto.getAvatar()) ? userInfoDto.getAvatar() : null);
+        System.out.println(userInfoDto);
+        m = userInfoMapper.updateByUidSelective(userInfo);
         return n == 1 || m == 1;
     }
 
     @Override
     public boolean addOrDelCollection(Integer bid, int option) {
-        int n = collectionMapper.selectByBidAndUid(GetUidBySecurity.getUid(), bid);
+        Integer uid = GetUidBySecurity.getUid();
+        int n = collectionMapper.selectByBidAndUid(uid, bid);
         if (option == 0 && n == 0) {
+            //添加到收藏数据库
             UserCollection userCollection = new UserCollection();
             userCollection.setBid(bid);
-            userCollection.setUid(GetUidBySecurity.getUid());
+            userCollection.setUid(uid);
+            //更新用户数据库的收藏数
+            UserInfo userInfo = userInfoMapper.selectByUid(uid);
+            userInfo.setCollections(userInfo.getCollections() + 1);
+            System.out.println(userInfo);
+            userInfoMapper.updateByUidSelective(userInfo);
             return collectionMapper.insertSelective(userCollection) != 0;
         } else if (option == 1 && n == 1) {
-            return collectionMapper.delete(GetUidBySecurity.getUid(), bid) != 0;
+            //更新用户数据库的收藏数
+            UserInfo userInfo = userInfoMapper.selectByUid(uid);
+            if (userInfo.getCollections() >= 1) {
+                userInfo.setCollections(userInfo.getCollections() - 1);
+            }
+            userInfoMapper.updateByUidSelective(userInfo);
+            return collectionMapper.delete(uid, bid) != 0;
         } else {
             return false;
         }
@@ -90,20 +98,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addOrDelStar(Integer rid, int option) {
-        int n = userMapper.selectStarByUidAndRid(GetUidBySecurity.getUid(), rid);
+        Integer uid = GetUidBySecurity.getUid();
+        int n = userMapper.selectStarByUidAndRid(uid, rid);
         if (option == 0 && n == 0) {
-            userMapper.insertStar(GetUidBySecurity.getUid(), rid);
+            userMapper.insertStar(uid, rid);
             UserRecommend userRecommend = recommendMapper.selectByPrimaryKey(rid);
             userRecommend.setStars(userRecommend.getStars() + 1);
             recommendMapper.updateByPrimaryKey(userRecommend);
             return true;
         } else if (option == 1 && n == 1) {
             UserRecommend userRecommend = recommendMapper.selectByPrimaryKey(rid);
-            if(userRecommend.getStars() > 1){
+            if (userRecommend.getStars() > 1) {
                 userRecommend.setStars(userRecommend.getStars() - 1);
             }
             recommendMapper.updateByPrimaryKey(userRecommend);
-            userMapper.deleteStar(GetUidBySecurity.getUid(), rid);
+            userMapper.deleteStar(uid, rid);
             return true;
         }
         return false;
@@ -138,6 +147,10 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "你只能对同一书籍进行一次推荐");
         }
         if (recommendMapper.insertSelective(userRecommend) == 1) {
+            //更新用户数据库的推荐数
+            UserInfo userInfo = userInfoMapper.selectByUid(uid);
+            userInfo.setRecommends(userInfo.getRecommends() + 1);
+            userInfoMapper.updateByUidSelective(userInfo);
             return true;
         }
         return false;

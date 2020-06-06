@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jycz.common.dao.UserInfoMapper">
-  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserInfo">
-    <result column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="bio" jdbcType="VARCHAR" property="bio" />
-    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
-    <result column="fans" jdbcType="INTEGER" property="fans" />
-    <result column="idols" jdbcType="INTEGER" property="idols" />
-    <result column="recommends" jdbcType="INTEGER" property="recommends" />
-    <result column="collections" jdbcType="INTEGER" property="collections" />
-    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
-  </resultMap>
-  <insert id="insert" parameterType="com.jycz.common.model.entity.UserInfo">
+    <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserInfo">
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="bio" jdbcType="VARCHAR" property="bio"/>
+        <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
+        <result column="fans" jdbcType="INTEGER" property="fans"/>
+        <result column="idols" jdbcType="INTEGER" property="idols"/>
+        <result column="recommends" jdbcType="INTEGER" property="recommends"/>
+        <result column="register_date" jdbcType="TIMESTAMP" property="registerDate"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.jycz.common.model.entity.UserInfo">
     insert into user_info (uid, bio, avatar_url, 
-      fans, idols, recommends,
-      collectionss, register_date)
+      fans, idols, recommends,register_date)
     values (#{uid,jdbcType=INTEGER}, #{bio,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
-      #{fans,jdbcType=INTEGER}, #{idols,jdbcType=INTEGER}, #{recommendss,jdbcType=INTEGER},
-      #{collectionss,jdbcType=INTEGER}, #{registerDate,jdbcType=TIMESTAMP})
+      #{fans,jdbcType=INTEGER}, #{idols,jdbcType=INTEGER}, #{recommendss,jdbcType=INTEGER},#{registerDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserInfo">
-    insert into user_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="bio != null">
-        bio,
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url,
-      </if>
-      <if test="fans != null">
-        fans_number,
-      </if>
-      <if test="idols != null">
-        idol_number,
-      </if>
-      <if test="recommends != null">
-        read_books,
-      </if>
-      <if test="collections != null">
-        unread_books,
-      </if>
-      <if test="registerDate != null">
-        register_date,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="bio != null">
-        #{bio,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        #{avatarUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="fans != null">
-        #{fans,jdbcType=INTEGER},
-      </if>
-      <if test="idols != null">
-        #{idols,jdbcType=INTEGER},
-      </if>
-      <if test="recommends != null">
-        #{recommends,jdbcType=INTEGER},
-      </if>
-      <if test="collections != null">
-        #{collections,jdbcType=INTEGER},
-      </if>
-      <if test="registerDate != null">
-        #{registerDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-    <update id="updateByUidSelective">
-      update user_info
-      <set>
-        <if test="bio != null">
-          bio = #{bio,jdbcType=VARCHAR},
-        </if>
-        <if test="avatarUrl != null">
-          avatar_url = #{avatarUrl,jdbcType=VARCHAR},
-        </if>
-      </set>
-      where uid = #{uid,jdbcType=INTEGER}
+    <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserInfo">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="bio != null">
+                bio,
+            </if>
+            <if test="avatarUrl != null">
+                avatar_url,
+            </if>
+            <if test="fans != null">
+                fans_number,
+            </if>
+            <if test="idols != null">
+                idol_number,
+            </if>
+            <if test="recommends != null">
+                read_books,
+            </if>
+            <if test="collections != null">
+                unread_books,
+            </if>
+            <if test="registerDate != null">
+                register_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="bio != null">
+                #{bio,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarUrl != null">
+                #{avatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fans != null">
+                #{fans,jdbcType=INTEGER},
+            </if>
+            <if test="idols != null">
+                #{idols,jdbcType=INTEGER},
+            </if>
+            <if test="recommends != null">
+                #{recommends,jdbcType=INTEGER},
+            </if>
+            <if test="collections != null">
+                #{collections,jdbcType=INTEGER},
+            </if>
+            <if test="registerDate != null">
+                #{registerDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByUidSelective" parameterType="com.jycz.common.model.entity.UserInfo">
+        update user_info
+        <set>
+            <if test="bio != null">
+                bio = #{bio,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarUrl != null">
+                avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="collections != null">
+                collections = #{collections}
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=INTEGER}
     </update>
     <select id="selectByUid" resultMap="BaseResultMap">
     select * from user_info where uid=#{uid}

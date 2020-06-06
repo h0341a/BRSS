@@ -36,6 +36,7 @@ public class UserModelConverter {
     public static RecommendVo recommendAndBookToRecommendVo(UserRecommend recommend, Book book){
         RecommendVo recommendVo = new RecommendVo();
         BeanUtils.copyProperties(recommend, recommendVo);
+        recommendVo.setCoverUrl(book.getCoverUrl());
         recommendVo.setBookName(book.getName());
         recommendVo.setAuthor(book.getAuthor());
         return recommendVo;

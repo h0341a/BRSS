@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class BookVo {
     private Integer id;
+    private String coverUrl;
     /**
      * 书籍名称
      */

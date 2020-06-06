@@ -17,6 +17,7 @@ public class BookModelConverter {
     public static RecommendVo recommendAndBookToRecommendVo(UserRecommend recommend, Book book, User user){
         RecommendVo recommendVo = new RecommendVo();
         recommendVo.setBid(book.getId());
+        recommendVo.setCoverUrl(book.getCoverUrl());
         recommendVo.setBookName(book.getName());
         recommendVo.setUid(recommend.getUid());
         recommendVo.setNickname(user.getNickname());

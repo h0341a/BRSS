@@ -1,7 +1,10 @@
 package com.jycz.common.model.entity;
 
+import lombok.ToString;
+
 import java.util.Date;
 
+@ToString
 public class UserInfo {
     private Integer uid;
 
