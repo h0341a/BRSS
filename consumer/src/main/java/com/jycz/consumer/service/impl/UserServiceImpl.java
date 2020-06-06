@@ -15,7 +15,6 @@ import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +78,6 @@ public class UserServiceImpl implements UserService {
             //更新用户数据库的收藏数
             UserInfo userInfo = userInfoMapper.selectByUid(uid);
             userInfo.setCollections(userInfo.getCollections() + 1);
-            System.out.println(userInfo);
             userInfoMapper.updateByUidSelective(userInfo);
             return collectionMapper.insertSelective(userCollection) != 0;
         } else if (option == 1 && n == 1) {
@@ -161,12 +159,14 @@ public class UserServiceImpl implements UserService {
         Integer uid = GetUidBySecurity.getUid();
         PageHelper.startPage(page, pageSize);
         List<UserRecommend> recommendList = recommendMapper.selectByUid(uid);
+        PageInfo pageInfo = new PageInfo(recommendList);
         List<RecommendVo> recommendVoList = new ArrayList<>();
-        recommendList.forEach(recommend -> {
-            Book book = bookMapper.selectByPrimaryKey(recommend.getBid());
-            recommendVoList.add(UserModelConverter.recommendAndBookToRecommendVo(recommend, book));
+        pageInfo.getList().forEach(recommend -> {
+            Book book = bookMapper.selectByPrimaryKey(((UserRecommend)recommend).getBid());
+            recommendVoList.add(UserModelConverter.recommendAndBookToRecommendVo(((UserRecommend)recommend), book));
         });
-        return new PageInfo<RecommendVo>(recommendVoList);
+        pageInfo.setList(recommendVoList);
+        return pageInfo;
     }
 
     @Override
