@@ -1,17 +1,21 @@
 package com.jycz.consumer.service;
 
 import com.github.pagehelper.PageInfo;
+import com.jycz.consumer.model.vo.DynamicVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.consumer.model.dto.UserInfoDto;
 import com.jycz.consumer.model.vo.RecommendVo;
 import com.jycz.consumer.model.vo.UserInfoVo;
 
+import java.util.List;
+
 /**
  * @author ling
  * @data 2020/4/8 11:25
  */
 public interface UserService {
+    public List<DynamicVo> getUserDynamic(Integer uid);
     public UserInfoVo getUserInfo();
 
     public boolean updateUserInfo(UserInfoDto userInfoDto);

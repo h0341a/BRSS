@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jycz.common.dao.*;
 import com.jycz.common.model.entity.*;
+import com.jycz.consumer.model.vo.DynamicVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.utils.GetUidBySecurity;
@@ -14,6 +15,7 @@ import com.jycz.consumer.model.vo.UserInfoVo;
 import com.jycz.consumer.service.UserService;
 import com.jycz.consumer.utils.UserModelConverter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,14 +33,26 @@ public class UserServiceImpl implements UserService {
     private final BookMapper bookMapper;
     private final UserRecommendMapper recommendMapper;
     private final UserCollectionMapper collectionMapper;
+    private final UserCommentMapper commentMapper;
 
-    public UserServiceImpl(UserMapper userMapper, UserInfoMapper userInfoMapper, RoleMapper roleMapper, BookMapper bookMapper, UserRecommendMapper recommendMapper, UserCollectionMapper collectionMapper) {
+    public UserServiceImpl(UserMapper userMapper, UserInfoMapper userInfoMapper, RoleMapper roleMapper, BookMapper bookMapper, UserRecommendMapper recommendMapper, UserCollectionMapper collectionMapper, UserCommentMapper commentMapper) {
         this.userMapper = userMapper;
         this.userInfoMapper = userInfoMapper;
         this.roleMapper = roleMapper;
         this.bookMapper = bookMapper;
         this.recommendMapper = recommendMapper;
         this.collectionMapper = collectionMapper;
+        this.commentMapper = commentMapper;
+    }
+
+    @Override
+    public List<DynamicVo> getUserDynamic(Integer uid) {
+        List<UserRecommend> recommendList = recommendMapper.selectByUid(uid);
+        List<Star> starList = userMapper.selectStarByUid(uid);
+        List<UserCollection> collectionList = collectionMapper.selectByUid(uid);
+        List<UserComment> userComments = commentMapper.selectByUid(uid);
+        System.out.println(1);
+        return UserModelConverter.mergeMultiList(recommendList,starList,collectionList,userComments );
     }
 
     @Override

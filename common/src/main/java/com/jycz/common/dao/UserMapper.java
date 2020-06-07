@@ -1,5 +1,6 @@
 package com.jycz.common.dao;
 
+import com.jycz.common.model.entity.Star;
 import com.jycz.common.model.entity.User;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Delete;
@@ -7,6 +8,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserMapper {
@@ -17,7 +20,7 @@ public interface UserMapper {
      * @return 返回值
      */
     User selectByUsername(String username);
-
+    List<Star> selectStarByUid(Integer uid);
     @Select("select count(*) from star where uid=#{uid} and rid=#{rid}")
     int selectStarByUidAndRid(Integer uid, Integer rid);
 

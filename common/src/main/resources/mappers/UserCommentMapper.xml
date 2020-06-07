@@ -25,7 +25,10 @@
     from user_comment
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByUid" resultMap="BaseResultMap">
+      select  uid,rid,comment_date from user_comment where uid=#{uid}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
