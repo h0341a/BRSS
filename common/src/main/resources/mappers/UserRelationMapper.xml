@@ -5,7 +5,6 @@
     <result column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="target_id" jdbcType="INTEGER" property="targetId" />
     <result column="status" jdbcType="BIT" property="status" />
-    <result column="ugid" jdbcType="INTEGER" property="ugid" />
   </resultMap>
   <insert id="insert" parameterType="com.jycz.common.model.entity.UserRelation">
     insert into user_relation (source_id, target_id, status,
@@ -25,9 +24,6 @@
       <if test="status != null">
         status,
       </if>
-      <if test="ugid != null">
-        ugid,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sourceId != null">
@@ -38,9 +34,6 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
-      </if>
-      <if test="ugid != null">
-        #{ugid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

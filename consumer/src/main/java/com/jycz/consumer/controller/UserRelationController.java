@@ -26,56 +26,31 @@ public class UserRelationController {
     }
 
     @ApiOperation("关注某人且放入分组")
-    @PostMapping("/follow/{targetId}")
-    public Result follow(@PathVariable Integer targetId, String groupName) throws BusinessException {
-        //uid应该从session里拿
+    @PostMapping("/follow")
+    public Result follow(Integer targetId) throws BusinessException {
         Integer uid = GetUidBySecurity.getUid();
         if (uid.equals(targetId)){
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
         }
-        if (StringUtils.isEmpty(groupName)){
-            groupName = "未分组";
-        }
-        if(userRelationService.addFollow(uid, targetId, groupName)){
+
+        if(userRelationService.addFollow(uid, targetId)){
             return Result.ofSuccess("关注成功");
         }else{
             return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR, "关注失败");
         }
     }
-
-    @ApiOperation("拉黑某人")
-    @PostMapping("/blacklist/{targetId}")
-    public Result blacklist(@PathVariable Integer targetId) throws BusinessException {
-        Integer uid = GetUidBySecurity.getUid();
-        if (uid.equals(targetId)){
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
-        }
-        if(userRelationService.joinBlacklist(uid,targetId)){
-            return Result.ofSuccess("已拉黑");
-        }
-        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
+    @GetMapping("/relation")
+    public Result getUserRelation(@RequestParam("uid") Integer targetId) throws BusinessException {
+        return Result.ofSuccess(userRelationService.hasRelation(targetId));
     }
-
     @ApiOperation("取消关注")
     @DeleteMapping("/follow/{targetId}")
     public Result cancelFollow(@PathVariable Integer targetId) throws BusinessException {
         Integer uid = GetUidBySecurity.getUid();
         if (uid.equals(targetId)){
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能取消自己哦");
         }
         if (userRelationService.cancelFollow(uid ,targetId)){
-            return Result.ofSuccess("取消成功");
-        }
-        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR, "取消失败");
-    }
-    @ApiOperation("取消拉黑某人")
-    @DeleteMapping("/blacklist/{targetId}")
-    public Result deleteFromBlacklist(@PathVariable Integer targetId) throws BusinessException {
-        Integer uid = GetUidBySecurity.getUid();
-        if (uid.equals(targetId)){
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己哦");
-        }
-        if (userRelationService.deleteFromBlacklist(uid ,targetId)){
             return Result.ofSuccess("取消成功");
         }
         return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR, "取消失败");

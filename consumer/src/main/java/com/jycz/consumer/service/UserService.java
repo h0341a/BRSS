@@ -17,7 +17,7 @@ import java.util.List;
 public interface UserService {
     public List<DynamicVo> getUserDynamic(Integer uid);
     public UserInfoVo getUserInfo();
-
+    public UserInfoVo getUserInfo(Integer uid);
     public boolean updateUserInfo(UserInfoDto userInfoDto);
 
     public boolean addOrDelCollection(Integer bid, int option);

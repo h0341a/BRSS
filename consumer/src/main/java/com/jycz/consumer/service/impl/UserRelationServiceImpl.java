@@ -9,6 +9,7 @@ import com.jycz.common.model.entity.UserGroup;
 import com.jycz.common.model.entity.UserRelation;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
+import com.jycz.common.utils.GetUidBySecurity;
 import com.jycz.consumer.service.UserRelationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,45 +42,22 @@ public class UserRelationServiceImpl implements UserRelationService {
      */
     @Override
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
-    public boolean addFollow(Integer sourceId, Integer targetId, String groupName) throws BusinessException {
+    public boolean addFollow(Integer sourceId, Integer targetId) throws BusinessException {
         if (userMapper.selectByPrimaryKey(targetId) == null) {
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "你要关注的用户不存在");
         }
-        Integer userGroupId = this.getUgId(sourceId, groupName);
         //当前用户是否与目标用户发起过关系
-        Boolean status = userRelationMapper.selectStatusByBothId(sourceId, targetId);
-        if (status == null) {
-            UserRelation userRelation = new UserRelation(sourceId, targetId, true, userGroupId);
-            userRelationMapper.insertSelective(userRelation);
-            return true;
-        } else if (status) {
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "你已经关注过该用户了");
-        } else {
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户是你的黑名单用户");
+        Boolean hasRelation = userRelationMapper.selectStatusByBothId(sourceId, targetId);
+        if (hasRelation == null){
+            hasRelation = false;
         }
+        if (hasRelation) {
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "你已经关注过该用户了");
+        }
+        UserRelation userRelation = new UserRelation(sourceId, targetId, true);
+        return userRelationMapper.insertSelective(userRelation) != 0;
     }
 
-    @Override
-    public boolean joinBlacklist(Integer sourceId, Integer targetId) throws BusinessException {
-        if (userMapper.selectByPrimaryKey(targetId) == null) {
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户不存在");
-        }
-        String groupName = "黑名单";
-        Integer userGroupId = this.getUgId(sourceId, groupName);
-        Boolean status = userRelationMapper.selectStatusByBothId(sourceId, targetId);
-        if (status == null) {
-            UserRelation userRelation = new UserRelation(sourceId, targetId, false, userGroupId);
-            userRelationMapper.insertSelective(userRelation);
-            return true;
-        } else if (status) {
-            //该用户是关注用户
-            userRelationMapper.updateRelationStatus(sourceId, targetId, false);
-            return true;
-        } else {
-            //已经将该用户拉黑
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户已经是你的黑名单用户了");
-        }
-    }
 
     @Override
     public boolean cancelFollow(Integer sourceId, Integer targetId) throws BusinessException {
@@ -96,23 +74,23 @@ public class UserRelationServiceImpl implements UserRelationService {
     }
 
     @Override
-    public boolean deleteFromBlacklist(Integer sourceId, Integer targetId) throws BusinessException {
-        if (userMapper.selectByPrimaryKey(targetId) == null) {
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该用户不存在");
+    public boolean hasRelation(Integer targetId) throws BusinessException {
+        if (targetId.equals(GetUidBySecurity.getUid())){
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己");
         }
-        Boolean status = userRelationMapper.selectStatusByBothId(sourceId, targetId);
-        if (status == null || status) {
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "用户之间不存在拉黑关系");
-        } else {
-            userRelationMapper.delete(sourceId, targetId);
-            return true;
+        Boolean relation = userRelationMapper.selectStatusByBothId(GetUidBySecurity.getUid(), targetId);
+        if( relation == null ){
+            return false;
+        }else{
+            return relation;
         }
     }
+
 
     /**
      * 获取分组id与代表用户与分组关系的ugid
      *
-     * @param sourceId   用户id
+     * @param sourceId  用户id
      * @param groupName 组名
      * @return int
      */

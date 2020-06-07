@@ -1,5 +1,8 @@
 package com.jycz.common.model.entity;
 
+import lombok.ToString;
+
+@ToString
 public class UserRelation {
     private Integer sourceId;
 
@@ -7,7 +10,6 @@ public class UserRelation {
 
     private Boolean status;
 
-    private Integer ugid;
 
     public Integer getSourceId() {
         return sourceId;
@@ -33,21 +35,13 @@ public class UserRelation {
         this.status = status;
     }
 
-    public Integer getUgid() {
-        return ugid;
-    }
-
-    public void setUgid(Integer ugid) {
-        this.ugid = ugid;
-    }
 
     public UserRelation() {
     }
 
-    public UserRelation(Integer sourceId, Integer targetId, Boolean status, Integer ugid) {
+    public UserRelation(Integer sourceId, Integer targetId, Boolean status) {
         this.sourceId = sourceId;
         this.targetId = targetId;
         this.status = status;
-        this.ugid = ugid;
     }
 }

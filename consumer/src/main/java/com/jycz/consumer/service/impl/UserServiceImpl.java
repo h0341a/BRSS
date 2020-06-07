@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService {
         List<Star> starList = userMapper.selectStarByUid(uid);
         List<UserCollection> collectionList = collectionMapper.selectByUid(uid);
         List<UserComment> userComments = commentMapper.selectByUid(uid);
-        System.out.println(1);
         return UserModelConverter.mergeMultiList(recommendList,starList,collectionList,userComments );
     }
 
@@ -59,6 +58,13 @@ public class UserServiceImpl implements UserService {
     public UserInfoVo getUserInfo() {
         UserInfo userInfo = userInfoMapper.selectByUid(GetUidBySecurity.getUid());
         User user = userMapper.selectByPrimaryKey(GetUidBySecurity.getUid());
+        return UserModelConverter.userInfoToUserInfoVo(userInfo, user);
+    }
+
+    @Override
+    public UserInfoVo getUserInfo(Integer uid) {
+        UserInfo userInfo = userInfoMapper.selectByUid(uid);
+        User user = userMapper.selectByPrimaryKey(uid);
         return UserModelConverter.userInfoToUserInfoVo(userInfo, user);
     }
 
