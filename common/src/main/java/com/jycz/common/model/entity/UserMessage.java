@@ -15,6 +15,15 @@ public class UserMessage {
 
     private Byte readStatus;
 
+    public UserMessage() {
+    }
+
+    public UserMessage(Integer sendUid, Integer acceptUid, String content) {
+        this.sendUid = sendUid;
+        this.acceptUid = acceptUid;
+        this.content = content;
+    }
+
     public Integer getSendUid() {
         return sendUid;
     }

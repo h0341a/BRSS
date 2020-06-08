@@ -1,18 +1,27 @@
 package com.jycz.consumer.service.impl;
 
-import com.jycz.common.dao.RelationGroupMapper;
-import com.jycz.common.dao.UserGroupMapper;
+import com.jycz.common.dao.UserInfoMapper;
 import com.jycz.common.dao.UserMapper;
+import com.jycz.common.dao.UserMessageMapper;
 import com.jycz.common.dao.UserRelationMapper;
-import com.jycz.common.model.entity.RelationGroup;
-import com.jycz.common.model.entity.UserGroup;
-import com.jycz.common.model.entity.UserRelation;
+import com.jycz.common.model.entity.*;
+import com.jycz.common.model.vo.UserVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.utils.GetUidBySecurity;
+import com.jycz.consumer.model.dto.MsgDto;
+import com.jycz.consumer.model.vo.FriendListVo;
+import com.jycz.consumer.model.vo.FriendVo;
+import com.jycz.consumer.model.vo.MsgVo;
 import com.jycz.consumer.service.UserRelationService;
+import com.jycz.consumer.utils.UserModelConverter;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ling
@@ -22,15 +31,63 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRelationServiceImpl implements UserRelationService {
 
     private final UserMapper userMapper;
-    private final RelationGroupMapper relationGroupMapper;
     private final UserRelationMapper userRelationMapper;
-    private final UserGroupMapper userGroupMapper;
+    private final UserMessageMapper msgMapper;
+    private final UserInfoMapper infoMapper;
 
-    public UserRelationServiceImpl(RelationGroupMapper relationGroupMapper, UserRelationMapper userRelationMapper, UserGroupMapper userGroupMapper, UserMapper userMapper) {
-        this.relationGroupMapper = relationGroupMapper;
+
+    public UserRelationServiceImpl(UserRelationMapper userRelationMapper, UserMapper userMapper, UserMessageMapper userMessageMapper, UserInfoMapper infoMapper) {
         this.userRelationMapper = userRelationMapper;
-        this.userGroupMapper = userGroupMapper;
         this.userMapper = userMapper;
+        this.msgMapper = userMessageMapper;
+        this.infoMapper = infoMapper;
+    }
+
+    @Override
+    public FriendListVo getFriendList() {
+        Integer uid = GetUidBySecurity.getUid();
+        List<Integer> userFollowIds = userRelationMapper.selectTargetIdBySourceId(uid);
+        List<Integer> followUserIds = userRelationMapper.selectSourceIdByTargetId(uid);
+        followUserIds.removeAll(userFollowIds);
+        List<FriendVo> userFollowList = this.idsConvertEntity(userFollowIds);
+        List<FriendVo> followUserList = this.idsConvertEntity(followUserIds);
+        return new FriendListVo(userFollowList, followUserList);
+    }
+
+    private List<FriendVo> idsConvertEntity(List<Integer> ids) {
+        List<FriendVo> friendList = new ArrayList<>();
+        ids.forEach(id -> {
+            User user = userMapper.selectByPrimaryKey(id);
+            UserInfo userInfo = infoMapper.selectByUid(id);
+            friendList.add(UserModelConverter.userToFriendVo(user, userInfo.getAvatarUrl()));
+        });
+        return friendList;
+    }
+
+    @Override
+    public boolean sendMsg(MsgDto msgDto) throws BusinessException {
+        if (userMapper.selectByPrimaryKey(msgDto.getTargetId()) == null) {
+            throw new BusinessException(ErrCodeEnum.DATA_ABORT, "目标用户不存在");
+        }
+        UserMessage userMessage = new UserMessage(GetUidBySecurity.getUid(), msgDto.getTargetId(), msgDto.getContent());
+        return msgMapper.insertSelective(userMessage) != 0;
+    }
+
+    @Override
+    public List<MsgVo> getMsgFromSb(Integer targetId) throws BusinessException {
+        Integer uid = GetUidBySecurity.getUid();
+        if (userMapper.selectByPrimaryKey(targetId) == null) {
+            throw new BusinessException(ErrCodeEnum.DATA_ABORT, "目标用户不存在");
+        }
+        List<UserMessage> userMessageList = msgMapper.selectMsgByUid(uid, targetId);
+        List<MsgVo> msgVoList = new ArrayList<>();
+        userMessageList.forEach(userMessage -> {
+            MsgVo msgVo = new MsgVo();
+            BeanUtils.copyProperties(userMessage, msgVo);
+            msgVo.setMyself(userMessage.getSendUid().equals(uid));
+            msgVoList.add(msgVo);
+        });
+        return msgVoList;
     }
 
     /**
@@ -48,7 +105,7 @@ public class UserRelationServiceImpl implements UserRelationService {
         }
         //当前用户是否与目标用户发起过关系
         Boolean hasRelation = userRelationMapper.selectStatusByBothId(sourceId, targetId);
-        if (hasRelation == null){
+        if (hasRelation == null) {
             hasRelation = false;
         }
         if (hasRelation) {
@@ -75,42 +132,15 @@ public class UserRelationServiceImpl implements UserRelationService {
 
     @Override
     public boolean hasRelation(Integer targetId) throws BusinessException {
-        if (targetId.equals(GetUidBySecurity.getUid())){
+        if (targetId.equals(GetUidBySecurity.getUid())) {
             throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己");
         }
         Boolean relation = userRelationMapper.selectStatusByBothId(GetUidBySecurity.getUid(), targetId);
-        if( relation == null ){
+        if (relation == null) {
             return false;
-        }else{
+        } else {
             return relation;
         }
     }
 
-
-    /**
-     * 获取分组id与代表用户与分组关系的ugid
-     *
-     * @param sourceId  用户id
-     * @param groupName 组名
-     * @return int
-     */
-    private Integer getUgId(Integer sourceId, String groupName) {
-        Integer gid = relationGroupMapper.selectIdByName(groupName);
-        if (gid == null) {
-            RelationGroup relationGroup = new RelationGroup();
-            relationGroup.setGroupName(groupName);
-            relationGroupMapper.insertSelective(relationGroup);
-            gid = relationGroup.getId();
-        }
-        //将用户与该分组建立关系
-        Integer userGroupId = userGroupMapper.selectIdByUid(sourceId);
-        if (userGroupId == null) {
-            UserGroup userGroup = new UserGroup();
-            userGroup.setUid(sourceId);
-            userGroup.setGid(gid);
-            userGroupMapper.insertSelective(userGroup);
-            userGroupId = userGroup.getId();
-        }
-        return userGroupId;
-    }
 }

@@ -6,6 +6,7 @@ import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.common.model.dto.UserDto;
 import com.jycz.common.model.vo.UserVo;
 import com.jycz.consumer.model.vo.DynamicVo;
+import com.jycz.consumer.model.vo.FriendVo;
 import com.jycz.consumer.model.vo.RecommendVo;
 import com.jycz.consumer.model.vo.UserInfoVo;
 import org.apache.commons.lang3.time.DateUtils;
@@ -91,5 +92,13 @@ public class UserModelConverter {
         userInfoVo.setEmail(user.getEmail());
         return userInfoVo;
     }
+    public static FriendVo userToFriendVo(User user, String avatarUrl){
+        FriendVo friendVo = new FriendVo();
+        friendVo.setNickname(user.getNickname());
+        friendVo.setUid(user.getId());
+        friendVo.setAvatarUrl(avatarUrl);
+        return friendVo;
+    }
+
 
 }

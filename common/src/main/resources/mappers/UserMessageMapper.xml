@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jycz.common.dao.UserMessageMapper">
-  <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserMessage">
-    <result column="send_uid" jdbcType="INTEGER" property="sendUid" />
-    <result column="accept_uid" jdbcType="INTEGER" property="acceptUid" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="send_date" jdbcType="TIMESTAMP" property="sendDate" />
-    <result column="send_status" jdbcType="TINYINT" property="sendStatus" />
-    <result column="read_status" jdbcType="TINYINT" property="readStatus" />
-  </resultMap>
-  <insert id="insert" parameterType="com.jycz.common.model.entity.UserMessage">
+    <resultMap id="BaseResultMap" type="com.jycz.common.model.entity.UserMessage">
+        <result column="send_uid" jdbcType="INTEGER" property="sendUid"/>
+        <result column="accept_uid" jdbcType="INTEGER" property="acceptUid"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="send_date" jdbcType="TIMESTAMP" property="sendDate"/>
+        <result column="send_status" jdbcType="TINYINT" property="sendStatus"/>
+        <result column="read_status" jdbcType="TINYINT" property="readStatus"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.jycz.common.model.entity.UserMessage">
     insert into user_message (send_uid, accept_uid, content, 
       send_date, send_status, read_status
       )
@@ -17,47 +17,50 @@
       #{sendDate,jdbcType=TIMESTAMP}, #{sendStatus,jdbcType=TINYINT}, #{readStatus,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserMessage">
-    insert into user_message
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sendUid != null">
-        send_uid,
-      </if>
-      <if test="acceptUid != null">
-        accept_uid,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="sendDate != null">
-        send_date,
-      </if>
-      <if test="sendStatus != null">
-        send_status,
-      </if>
-      <if test="readStatus != null">
-        read_status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sendUid != null">
-        #{sendUid,jdbcType=INTEGER},
-      </if>
-      <if test="acceptUid != null">
-        #{acceptUid,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="sendDate != null">
-        #{sendDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sendStatus != null">
-        #{sendStatus,jdbcType=TINYINT},
-      </if>
-      <if test="readStatus != null">
-        #{readStatus,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insertSelective" parameterType="com.jycz.common.model.entity.UserMessage">
+        insert into user_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sendUid != null">
+                send_uid,
+            </if>
+            <if test="acceptUid != null">
+                accept_uid,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="sendDate != null">
+                send_date,
+            </if>
+            <if test="sendStatus != null">
+                send_status,
+            </if>
+            <if test="readStatus != null">
+                read_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sendUid != null">
+                #{sendUid,jdbcType=INTEGER},
+            </if>
+            <if test="acceptUid != null">
+                #{acceptUid,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="sendDate != null">
+                #{sendDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendStatus != null">
+                #{sendStatus,jdbcType=TINYINT},
+            </if>
+            <if test="readStatus != null">
+                #{readStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectMsgByUid" resultMap="BaseResultMap">
+      select * from user_message where (send_uid=#{id1} and accept_uid=#{id2}) or (send_uid=#{id2} and accept_uid=#{id1})
+    </select>
 </mapper>
