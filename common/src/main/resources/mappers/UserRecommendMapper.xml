@@ -35,6 +35,9 @@
         join book b on u.bid = b.id and b.status = 1
         where u.status = 0
     </select>
+    <select id="selectByBid" resultMap="BaseResultMap">
+          select * from user_recommend where bid=#{bid}
+    </select>
     <select id="selectByUid" resultMap="BaseResultMap">
           select * from user_recommend where uid=#{uid}
     </select>

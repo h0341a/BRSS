@@ -1,6 +1,7 @@
 package com.jycz.consumer.service;
 
 import com.github.pagehelper.PageInfo;
+import com.jycz.consumer.model.dto.AddRecommendDto;
 import com.jycz.consumer.model.vo.DynamicVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.consumer.model.dto.RecommendDto;
@@ -36,6 +37,7 @@ public interface UserService {
      * @return 是否成功
      */
     public boolean addBookRecommend(Integer uid, RecommendDto recommendDto) throws BusinessException;
+    public boolean addBookRecommend(AddRecommendDto addRecommendDto) throws BusinessException;
 
     /**
      * 获取用户创建的推荐的列表

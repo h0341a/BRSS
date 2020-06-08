@@ -13,6 +13,8 @@ public interface UserRecommendMapper {
     Integer selectIdByUidAndBid(Integer uid, Integer bid);
     @Select("select * from user_recommend")
     List<UserRecommend> selectAll();
+
+    List<UserRecommend> selectByBid(Integer bid);
     List<UserRecommend> selectByUid(Integer uid);
 
     List<UserRecommend> selectToReviewList();

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jycz.common.dao.*;
 import com.jycz.common.model.entity.*;
+import com.jycz.consumer.model.dto.AddRecommendDto;
 import com.jycz.consumer.model.vo.DynamicVo;
 import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
         List<Star> starList = userMapper.selectStarByUid(uid);
         List<UserCollection> collectionList = collectionMapper.selectByUid(uid);
         List<UserComment> userComments = commentMapper.selectByUid(uid);
-        return UserModelConverter.mergeMultiList(recommendList,starList,collectionList,userComments );
+        return UserModelConverter.mergeMultiList(recommendList, starList, collectionList, userComments);
     }
 
     @Override
@@ -175,6 +176,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean addBookRecommend(AddRecommendDto addRecommendDto) throws BusinessException {
+        Integer n = recommendMapper.selectIdByUidAndBid(GetUidBySecurity.getUid(), addRecommendDto.getBid());
+        if (n != null) {
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "你只能对同一书籍进行一次推荐");
+        }
+        UserRecommend userRecommend = new UserRecommend();
+        userRecommend.setTitle(addRecommendDto.getTitle());
+        userRecommend.setContent(addRecommendDto.getContent());
+        userRecommend.setBid(addRecommendDto.getBid());
+        userRecommend.setUid(GetUidBySecurity.getUid());
+        return recommendMapper.insertSelective(userRecommend) != 0;
+    }
+
+    @Override
     public PageInfo<RecommendVo> getRecommends(int page, int pageSize) {
         Integer uid = GetUidBySecurity.getUid();
         PageHelper.startPage(page, pageSize);
@@ -182,8 +197,8 @@ public class UserServiceImpl implements UserService {
         PageInfo pageInfo = new PageInfo(recommendList);
         List<RecommendVo> recommendVoList = new ArrayList<>();
         pageInfo.getList().forEach(recommend -> {
-            Book book = bookMapper.selectByPrimaryKey(((UserRecommend)recommend).getBid());
-            recommendVoList.add(UserModelConverter.recommendAndBookToRecommendVo(((UserRecommend)recommend), book));
+            Book book = bookMapper.selectByPrimaryKey(((UserRecommend) recommend).getBid());
+            recommendVoList.add(UserModelConverter.recommendAndBookToRecommendVo(((UserRecommend) recommend), book));
         });
         pageInfo.setList(recommendVoList);
         return pageInfo;

@@ -92,11 +92,12 @@ public class UserModelConverter {
         userInfoVo.setEmail(user.getEmail());
         return userInfoVo;
     }
-    public static FriendVo userToFriendVo(User user, String avatarUrl){
+    public static FriendVo userToFriendVo(User user, String avatarUrl, Boolean flag){
         FriendVo friendVo = new FriendVo();
         friendVo.setNickname(user.getNickname());
         friendVo.setUid(user.getId());
         friendVo.setAvatarUrl(avatarUrl);
+        friendVo.setHasMsg(flag);
         return friendVo;
     }
 

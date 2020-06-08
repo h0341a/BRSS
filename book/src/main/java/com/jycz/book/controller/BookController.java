@@ -11,10 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -54,5 +51,17 @@ public class BookController {
                                   @RequestParam(defaultValue = "8") int pageSize) {
         return Result.ofSuccess(bookService.getCollectBooks(page, pageSize));
 
+    }
+
+    @ApiOperation("获取某个书籍的信息")
+    @GetMapping("/book/{bid}")
+    public Result getBookInfo(@PathVariable("bid") Integer bid) throws BusinessException {
+        return Result.ofSuccess(bookService.getBookDetails(bid));
+    }
+
+    @ApiOperation("获取某个推荐的信息")
+    @GetMapping("/recommend/{rid}")
+    public Result getRecommendInfo(@PathVariable("rid") String rid) {
+        return null;
     }
 }

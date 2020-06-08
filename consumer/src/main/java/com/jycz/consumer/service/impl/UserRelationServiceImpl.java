@@ -59,7 +59,8 @@ public class UserRelationServiceImpl implements UserRelationService {
         ids.forEach(id -> {
             User user = userMapper.selectByPrimaryKey(id);
             UserInfo userInfo = infoMapper.selectByUid(id);
-            friendList.add(UserModelConverter.userToFriendVo(user, userInfo.getAvatarUrl()));
+            Boolean flag = msgMapper.selectUnreadMsg(id, GetUidBySecurity.getUid()) != 0;
+            friendList.add(UserModelConverter.userToFriendVo(user, userInfo.getAvatarUrl(), flag));
         });
         return friendList;
     }

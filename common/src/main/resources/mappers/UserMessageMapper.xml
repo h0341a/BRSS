@@ -63,4 +63,8 @@
     <select id="selectMsgByUid" resultMap="BaseResultMap">
       select * from user_message where (send_uid=#{id1} and accept_uid=#{id2}) or (send_uid=#{id2} and accept_uid=#{id1})
     </select>
+    <select id="selectUnreadMsg" resultType="java.lang.Integer">
+        select count(*) from user_message
+        where send_uid=#{targetId} and accept_uid=#{uid} and read_status=0
+    </select>
 </mapper>

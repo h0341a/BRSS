@@ -1,8 +1,10 @@
 package com.jycz.book.service;
 
 import com.github.pagehelper.PageInfo;
+import com.jycz.book.model.vo.BookDetailsVo;
 import com.jycz.book.model.vo.BookVo;
 import com.jycz.book.model.vo.RecommendVo;
+import com.jycz.common.response.BusinessException;
 
 public interface BookService {
     public PageInfo<RecommendVo> getRecommends(int page, int pageSize);
@@ -14,4 +16,7 @@ public interface BookService {
      * @return 书籍列表
      */
     public PageInfo<BookVo> getCollectBooks(int page, int pageSize);
+
+    public BookDetailsVo getBookDetails(Integer bid) throws BusinessException;
+
 }

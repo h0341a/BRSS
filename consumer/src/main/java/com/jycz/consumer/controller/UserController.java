@@ -5,6 +5,7 @@ import com.jycz.common.response.BusinessException;
 import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.response.Result;
 import com.jycz.common.utils.GetUidBySecurity;
+import com.jycz.consumer.model.dto.AddRecommendDto;
 import com.jycz.consumer.model.dto.RecommendDto;
 import com.jycz.consumer.model.dto.UserInfoDto;
 import com.jycz.consumer.service.UserService;
@@ -40,6 +41,15 @@ public class UserController {
         return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
     }
 
+    @ApiOperation("为某个书籍添加推荐")
+    @PostMapping("/book/recommend")
+    public Result addRecommendForBook(@Valid AddRecommendDto addRecommendDto) throws BusinessException {
+        Integer uid = GetUidBySecurity.getUid();
+        if (userService.addBookRecommend(addRecommendDto)) {
+            return Result.ofSuccess("添加推荐成功");
+        }
+        return Result.ofFail(ErrCodeEnum.UNKNOWN_ERROR);
+    }
     @ApiOperation("添加收藏书籍")
     @PostMapping("/collection")
     public Result addCollection(Integer bid) {

@@ -3,18 +3,16 @@ package com.jycz.book.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jycz.book.model.vo.BookDetailsVo;
 import com.jycz.book.model.vo.BookVo;
+import com.jycz.book.model.vo.RecommendItemVo;
 import com.jycz.book.model.vo.RecommendVo;
 import com.jycz.book.service.BookService;
 import com.jycz.book.utils.BookModelConverter;
-import com.jycz.common.dao.BookMapper;
-import com.jycz.common.dao.UserCollectionMapper;
-import com.jycz.common.dao.UserMapper;
-import com.jycz.common.dao.UserRecommendMapper;
-import com.jycz.common.model.entity.Book;
-import com.jycz.common.model.entity.User;
-import com.jycz.common.model.entity.UserCollection;
-import com.jycz.common.model.entity.UserRecommend;
+import com.jycz.common.dao.*;
+import com.jycz.common.model.entity.*;
+import com.jycz.common.response.BusinessException;
+import com.jycz.common.response.ErrCodeEnum;
 import com.jycz.common.utils.GetUidBySecurity;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +27,14 @@ public class BookServiceImpl implements BookService {
     private final UserCollectionMapper collectionMapper;
     private final UserRecommendMapper recommendMapper;
     private final UserMapper userMapper;
+    private final UserInfoMapper userInfoMapper;
 
-    public BookServiceImpl(BookMapper bookMapper, UserCollectionMapper collectionMapper, UserRecommendMapper recommendMapper, UserMapper userMapper) {
+    public BookServiceImpl(BookMapper bookMapper, UserCollectionMapper collectionMapper, UserRecommendMapper recommendMapper, UserMapper userMapper, UserInfoMapper userInfoMapper) {
         this.bookMapper = bookMapper;
         this.collectionMapper = collectionMapper;
         this.recommendMapper = recommendMapper;
         this.userMapper = userMapper;
+        this.userInfoMapper = userInfoMapper;
     }
 
     @Override
@@ -79,12 +79,27 @@ public class BookServiceImpl implements BookService {
         PageInfo pageInfo = new PageInfo(collections);
         List<BookVo> bookVoList = new ArrayList<>();
         pageInfo.getList().forEach(collection -> {
-            Book book = bookMapper.selectByPrimaryKey(((UserCollection)collection).getBid());
+            Book book = bookMapper.selectByPrimaryKey(((UserCollection) collection).getBid());
             BookVo bookVo = BookModelConverter.bookToBookVo(book);
-            bookVo.setCollectionDate(((UserCollection)collection).getCollectionDate());
+            bookVo.setCollectionDate(((UserCollection) collection).getCollectionDate());
             bookVoList.add(bookVo);
         });
         pageInfo.setList(bookVoList);
         return pageInfo;
+    }
+
+    @Override
+    public BookDetailsVo getBookDetails(Integer bid) throws BusinessException {
+        Book book = bookMapper.selectByPrimaryKey(bid);
+        if (book == null){
+            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "该书籍不存在");
+        }
+        List<UserRecommend> userRecommendList = recommendMapper.selectByBid(bid);
+        List<RecommendItemVo> recommendItemVos = new ArrayList<>();
+        userRecommendList.forEach(recommend -> {
+            UserInfo userInfo = userInfoMapper.selectByUid(recommend.getUid());
+            recommendItemVos.add(BookModelConverter.recommendToItem(recommend, userInfo.getAvatarUrl()));
+        });
+        return BookModelConverter.bookToBookDetails(book, recommendItemVos);
     }
 }
