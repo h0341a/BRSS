@@ -44,6 +44,8 @@ public class BookModelConverter {
         item.setContent(recommend.getContent());
         item.setRid(recommend.getId());
         item.setAvatarUrl(avatarUrl);
+        item.setUid(recommend.getUid());
+        item.setRecommendDate(recommend.getRecommendDate());
         return item;
     }
 }

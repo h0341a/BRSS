@@ -64,6 +64,7 @@ public class UserRelationController {
 
     @GetMapping("/relation")
     public Result getUserRelation(@RequestParam("uid") Integer targetId) throws BusinessException {
+        System.out.println(targetId);
         return Result.ofSuccess(userRelationService.hasRelation(targetId));
     }
 

@@ -133,9 +133,6 @@ public class UserRelationServiceImpl implements UserRelationService {
 
     @Override
     public boolean hasRelation(Integer targetId) throws BusinessException {
-        if (targetId.equals(GetUidBySecurity.getUid())) {
-            throw new BusinessException(ErrCodeEnum.USER_OPERATION_PUZZLE, "自己不能关注自己");
-        }
         Boolean relation = userRelationMapper.selectStatusByBothId(GetUidBySecurity.getUid(), targetId);
         if (relation == null) {
             return false;
