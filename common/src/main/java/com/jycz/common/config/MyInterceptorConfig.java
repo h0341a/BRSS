@@ -8,11 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 public class MyInterceptorConfig extends WebMvcConfigurationSupport {
 
-    private String UPLOAD_FOLDER = "/home/ling/development/IdeaProjects/brss/common/src/main/resources/img/";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("file:" + UPLOAD_FOLDER);
+        String projectDir = System.getProperty("user.dir");
+        registry.addResourceHandler("/img/**").addResourceLocations("file:" + projectDir+"/img/");
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }

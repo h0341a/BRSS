@@ -14,25 +14,26 @@ import java.util.UUID;
 @Api(tags = "图片服务器")
 @RestController
 public class ImgUploadController {
-    private final String LOCAL_IMG_FILE = "/home/ling/development/IdeaProjects/brss/common/src/main/resources/img/";
 
     @DeleteMapping("/img")
-    public Result deleteImg(String imgName){
-        String localPath = LOCAL_IMG_FILE + imgName;
+    public Result deleteImg(String imgName) {
+        String imgDir = System.getProperty("user.dir") +"/img/";
+        String localPath = imgDir + imgName;
         File file = new File(localPath);
-        if(file.exists()){
-            if(file.delete()){
+        if (file.exists()) {
+            if (file.delete()) {
                 return Result.ofSuccess("删除成功");
-            }else{
+            } else {
                 return Result.ofFail(ErrCodeEnum.DATA_ABORT, "图片存在，但是删除失败");
             }
-        }else{
+        } else {
             return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "图片不存在");
         }
     }
 
     @PostMapping("/upload")
     public Result imageUpload(@RequestParam("uploadFile") MultipartFile uploadImg) {
+        String imgDir = System.getProperty("user.dir") +"/img/";
         if (uploadImg == null) {
             return Result.ofFail(ErrCodeEnum.USER_OPERATION_PUZZLE, "图片不能为空");
         } else if (uploadImg.getSize() > 1024 * 1024 * 10) {
@@ -45,13 +46,13 @@ public class ImgUploadController {
         if (!"jpg,jpeg,gif,png".toUpperCase().contains(suffix.toUpperCase())) {
             return Result.ofFail(ErrCodeEnum.PARAMETERS_INVALID, "请选择jpg,jpeg,gif,png格式的图片");
         }
-        File imgFilePath = new File(LOCAL_IMG_FILE);
+        File imgFilePath = new File(imgDir);
         if (!imgFilePath.exists()) {
             imgFilePath.mkdir();
         }
         String filename = UUID.randomUUID().toString().replaceAll("-", "") + "." + suffix;
         try {
-            uploadImg.transferTo(new File(LOCAL_IMG_FILE + filename));
+            uploadImg.transferTo(new File(imgDir + filename));
         } catch (Exception e) {
             e.printStackTrace();
             return Result.ofFail(ErrCodeEnum.DATA_ABORT, "保存文件异常");

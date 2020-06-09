@@ -2,6 +2,7 @@
 ### Example user template template
 ### Example user template
 common/src/main/resources/img/
+img/
 # IntelliJ project files
 .idea
 *.iml
